@@ -507,10 +507,10 @@ def main():
     parser = argparse.ArgumentParser()
 
     # Working defaults from the uploaded slam_map_viewer.py, plus cmd_vel.
-    parser.add_argument("--scan-topic", default="/tb4_3/scan")
-    parser.add_argument("--map-topic", default="/tb4_3/map")
-    parser.add_argument("--odom-topic", default="/tb4_3/odom")
-    parser.add_argument("--cmd-topic", default="/tb4_3/cmd_vel")
+    parser.add_argument("--scan-topic", default="scan")
+    parser.add_argument("--map-topic", default="map")
+    parser.add_argument("--odom-topic", default="odom")
+    parser.add_argument("--cmd-topic", default="cmd_vel")
 
     parser.add_argument("--base-frame", default="base_link")
     parser.add_argument("--odom-frame", default="odom")

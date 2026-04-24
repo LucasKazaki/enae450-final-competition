@@ -218,9 +218,9 @@ def draw_loop(viewer):
 def main():
     parser = argparse.ArgumentParser()
 
-    parser.add_argument("--scan-topic", default="/scan")
-    parser.add_argument("--map-topic", default="/map")
-    parser.add_argument("--odom-topic", default="/odom")
+    parser.add_argument("--scan-topic", default="scan")
+    parser.add_argument("--map-topic", default="map")
+    parser.add_argument("--odom-topic", default="odom")
 
     parser.add_argument("--base-frame", default="base_link")
     parser.add_argument("--odom-frame", default="odom")
