@@ -24,10 +24,10 @@ setup(
     },
     entry_points={
         'console_scripts': [
-            'move_robot = final_comp.move_robot:main',
-            'view_map = final_comp.view_map:main',
-            'slam_map_viewer = final_comp.slam_map_viewer:main',
-            'maze_solver = final_comp.maze_solver:main',
+            'move_robot = src.move_robot:main',
+            'view_map = src.view_map:main',
+            'slam_map_viewer = src.slam_map_viewer:main',
+            'maze_solver = src.maze_solver:main',
         ],
     },
 )
