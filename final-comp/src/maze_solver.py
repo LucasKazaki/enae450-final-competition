@@ -1025,3 +1025,23 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+'''python3 maze_solver_junction_dfs.py \
+  --scan-topic /tb4_3/scan \
+  --map-topic /tb4_3/map \
+  --odom-topic /tb4_3/odom \
+  --cmd-topic /tb4_3/cmd_vel \
+  --use-sim-time \
+  --plot
+  
+  safe: 
+  python3 maze_solver_junction_dfs.py \
+  --scan-topic /tb4_3/scan \
+  --map-topic /tb4_3/map \
+  --odom-topic /tb4_3/odom \
+  --cmd-topic /tb4_3/cmd_vel \
+  --use-sim-time \
+  --plot \
+  --linear-speed 0.10 \
+  --safe-distance 0.55 \
+  --emergency-distance 0.32'''
