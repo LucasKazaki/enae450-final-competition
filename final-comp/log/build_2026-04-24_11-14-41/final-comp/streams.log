@@ -1,0 +1,49 @@
+[2.654s] Invoking command in '/home/kazaki/enae450-s26/final competition/enae450-final-competition/final-comp': PYTHONPATH=/home/kazaki/enae450-s26/final competition/enae450-final-competition/final-comp/build/final-comp/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/kazaki/enae450-s26/final competition/enae450-final-competition/final-comp/install/final-comp/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base build/final-comp build --build-base /home/kazaki/enae450-s26/final competition/enae450-final-competition/final-comp/build/final-comp/build install --record /home/kazaki/enae450-s26/final competition/enae450-final-competition/final-comp/build/final-comp/install.log --single-version-externally-managed install_data
+[3.280s] running egg_info
+[3.281s] creating build/final-comp/final_comp.egg-info
+[3.325s] writing build/final-comp/final_comp.egg-info/PKG-INFO
+[3.325s] writing dependency_links to build/final-comp/final_comp.egg-info/dependency_links.txt
+[3.325s] writing entry points to build/final-comp/final_comp.egg-info/entry_points.txt
+[3.326s] writing requirements to build/final-comp/final_comp.egg-info/requires.txt
+[3.326s] writing top-level names to build/final-comp/final_comp.egg-info/top_level.txt
+[3.326s] writing manifest file 'build/final-comp/final_comp.egg-info/SOURCES.txt'
+[3.402s] reading manifest file 'build/final-comp/final_comp.egg-info/SOURCES.txt'
+[3.403s] writing manifest file 'build/final-comp/final_comp.egg-info/SOURCES.txt'
+[3.403s] running build
+[3.403s] running build_py
+[3.403s] creating /home/kazaki/enae450-s26/final competition/enae450-final-competition/final-comp/build/final-comp/build
+[3.404s] creating /home/kazaki/enae450-s26/final competition/enae450-final-competition/final-comp/build/final-comp/build/lib
+[3.404s] creating /home/kazaki/enae450-s26/final competition/enae450-final-competition/final-comp/build/final-comp/build/lib/final-comp
+[3.404s] copying final-comp/view_map.py -> /home/kazaki/enae450-s26/final competition/enae450-final-competition/final-comp/build/final-comp/build/lib/final-comp
+[3.405s] copying final-comp/maze_solver.py -> /home/kazaki/enae450-s26/final competition/enae450-final-competition/final-comp/build/final-comp/build/lib/final-comp
+[3.405s] copying final-comp/slam_map_viewer.py -> /home/kazaki/enae450-s26/final competition/enae450-final-competition/final-comp/build/final-comp/build/lib/final-comp
+[3.406s] copying final-comp/move_robot.py -> /home/kazaki/enae450-s26/final competition/enae450-final-competition/final-comp/build/final-comp/build/lib/final-comp
+[3.406s] copying final-comp/__init__.py -> /home/kazaki/enae450-s26/final competition/enae450-final-competition/final-comp/build/final-comp/build/lib/final-comp
+[3.407s] running install
+[3.423s] running install_lib
+[3.460s] creating /home/kazaki/enae450-s26/final competition/enae450-final-competition/final-comp/install/final-comp/lib/python3.12/site-packages/final-comp
+[3.460s] copying /home/kazaki/enae450-s26/final competition/enae450-final-competition/final-comp/build/final-comp/build/lib/final-comp/view_map.py -> /home/kazaki/enae450-s26/final competition/enae450-final-competition/final-comp/install/final-comp/lib/python3.12/site-packages/final-comp
+[3.460s] copying /home/kazaki/enae450-s26/final competition/enae450-final-competition/final-comp/build/final-comp/build/lib/final-comp/maze_solver.py -> /home/kazaki/enae450-s26/final competition/enae450-final-competition/final-comp/install/final-comp/lib/python3.12/site-packages/final-comp
+[3.461s] copying /home/kazaki/enae450-s26/final competition/enae450-final-competition/final-comp/build/final-comp/build/lib/final-comp/slam_map_viewer.py -> /home/kazaki/enae450-s26/final competition/enae450-final-competition/final-comp/install/final-comp/lib/python3.12/site-packages/final-comp
+[3.461s] copying /home/kazaki/enae450-s26/final competition/enae450-final-competition/final-comp/build/final-comp/build/lib/final-comp/move_robot.py -> /home/kazaki/enae450-s26/final competition/enae450-final-competition/final-comp/install/final-comp/lib/python3.12/site-packages/final-comp
+[3.461s] copying /home/kazaki/enae450-s26/final competition/enae450-final-competition/final-comp/build/final-comp/build/lib/final-comp/__init__.py -> /home/kazaki/enae450-s26/final competition/enae450-final-competition/final-comp/install/final-comp/lib/python3.12/site-packages/final-comp
+[3.462s] byte-compiling /home/kazaki/enae450-s26/final competition/enae450-final-competition/final-comp/install/final-comp/lib/python3.12/site-packages/final-comp/view_map.py to view_map.cpython-312.pyc
+[3.463s] byte-compiling /home/kazaki/enae450-s26/final competition/enae450-final-competition/final-comp/install/final-comp/lib/python3.12/site-packages/final-comp/maze_solver.py to maze_solver.cpython-312.pyc
+[3.472s] byte-compiling /home/kazaki/enae450-s26/final competition/enae450-final-competition/final-comp/install/final-comp/lib/python3.12/site-packages/final-comp/slam_map_viewer.py to slam_map_viewer.cpython-312.pyc
+[3.482s] byte-compiling /home/kazaki/enae450-s26/final competition/enae450-final-competition/final-comp/install/final-comp/lib/python3.12/site-packages/final-comp/move_robot.py to move_robot.cpython-312.pyc
+[3.483s] byte-compiling /home/kazaki/enae450-s26/final competition/enae450-final-competition/final-comp/install/final-comp/lib/python3.12/site-packages/final-comp/__init__.py to __init__.cpython-312.pyc
+[3.483s] running install_data
+[3.484s] creating /home/kazaki/enae450-s26/final competition/enae450-final-competition/final-comp/install/final-comp/share/ament_index
+[3.484s] creating /home/kazaki/enae450-s26/final competition/enae450-final-competition/final-comp/install/final-comp/share/ament_index/resource_index
+[3.484s] creating /home/kazaki/enae450-s26/final competition/enae450-final-competition/final-comp/install/final-comp/share/ament_index/resource_index/packages
+[3.485s] copying resource/final-comp -> /home/kazaki/enae450-s26/final competition/enae450-final-competition/final-comp/install/final-comp/share/ament_index/resource_index/packages
+[3.485s] copying package.xml -> /home/kazaki/enae450-s26/final competition/enae450-final-competition/final-comp/install/final-comp/share/final-comp
+[3.485s] running install_egg_info
+[3.532s] Copying build/final-comp/final_comp.egg-info to /home/kazaki/enae450-s26/final competition/enae450-final-competition/final-comp/install/final-comp/lib/python3.12/site-packages/final_comp-0.0.0-py3.12.egg-info
+[3.534s] running install_scripts
+[3.840s] Installing maze_solver script to /home/kazaki/enae450-s26/final competition/enae450-final-competition/final-comp/install/final-comp/lib/final-comp
+[3.840s] Installing move_robot script to /home/kazaki/enae450-s26/final competition/enae450-final-competition/final-comp/install/final-comp/lib/final-comp
+[3.840s] Installing slam_map_viewer script to /home/kazaki/enae450-s26/final competition/enae450-final-competition/final-comp/install/final-comp/lib/final-comp
+[3.840s] Installing view_map script to /home/kazaki/enae450-s26/final competition/enae450-final-competition/final-comp/install/final-comp/lib/final-comp
+[3.841s] writing list of installed files to '/home/kazaki/enae450-s26/final competition/enae450-final-competition/final-comp/build/final-comp/install.log'
+[3.904s] Invoked command in '/home/kazaki/enae450-s26/final competition/enae450-final-competition/final-comp' returned '0': PYTHONPATH=/home/kazaki/enae450-s26/final competition/enae450-final-competition/final-comp/build/final-comp/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/kazaki/enae450-s26/final competition/enae450-final-competition/final-comp/install/final-comp/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base build/final-comp build --build-base /home/kazaki/enae450-s26/final competition/enae450-final-competition/final-comp/build/final-comp/build install --record /home/kazaki/enae450-s26/final competition/enae450-final-competition/final-comp/build/final-comp/install.log --single-version-externally-managed install_data

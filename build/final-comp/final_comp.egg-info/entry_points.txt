@@ -1,0 +1,5 @@
+[console_scripts]
+maze_solver = final_comp.maze_solver:main
+move_robot = final_comp.move_robot:main
+slam_map_viewer = final_comp.slam_map_viewer:main
+view_map = final_comp.view_map:main
