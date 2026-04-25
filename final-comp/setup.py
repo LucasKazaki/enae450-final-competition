@@ -28,6 +28,7 @@ setup(
             'view_map = src.view_map:main',
             'slam_map_viewer = src.slam_map_viewer:main',
             'maze_solver = src.maze_solver:main',
+            'right_hand_solver = src.right_hand_solver:main',
         ],
     },
 )

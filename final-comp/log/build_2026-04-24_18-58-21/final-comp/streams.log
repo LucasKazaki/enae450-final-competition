@@ -1,0 +1,28 @@
+[1.896s] Invoking command in '/home/kazaki/enae450-s26/final competition/enae450-final-competition/final-comp': PYTHONPATH=/home/kazaki/enae450-s26/final competition/enae450-final-competition/final-comp/build/final-comp/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/kazaki/enae450-s26/final competition/enae450-final-competition/final-comp/install/final-comp/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base build/final-comp build --build-base /home/kazaki/enae450-s26/final competition/enae450-final-competition/final-comp/build/final-comp/build install --record /home/kazaki/enae450-s26/final competition/enae450-final-competition/final-comp/build/final-comp/install.log --single-version-externally-managed install_data
+[2.476s] running egg_info
+[2.528s] writing build/final-comp/final_comp.egg-info/PKG-INFO
+[2.528s] writing dependency_links to build/final-comp/final_comp.egg-info/dependency_links.txt
+[2.531s] writing entry points to build/final-comp/final_comp.egg-info/entry_points.txt
+[2.534s] writing requirements to build/final-comp/final_comp.egg-info/requires.txt
+[2.534s] writing top-level names to build/final-comp/final_comp.egg-info/top_level.txt
+[2.634s] reading manifest file 'build/final-comp/final_comp.egg-info/SOURCES.txt'
+[2.636s] writing manifest file 'build/final-comp/final_comp.egg-info/SOURCES.txt'
+[2.637s] running build
+[2.637s] running build_py
+[2.637s] copying src/right_hand_solver.py -> /home/kazaki/enae450-s26/final competition/enae450-final-competition/final-comp/build/final-comp/build/lib/src
+[2.638s] running install
+[2.649s] running install_lib
+[2.701s] copying /home/kazaki/enae450-s26/final competition/enae450-final-competition/final-comp/build/final-comp/build/lib/src/right_hand_solver.py -> /home/kazaki/enae450-s26/final competition/enae450-final-competition/final-comp/install/final-comp/lib/python3.12/site-packages/src
+[2.703s] byte-compiling /home/kazaki/enae450-s26/final competition/enae450-final-competition/final-comp/install/final-comp/lib/python3.12/site-packages/src/right_hand_solver.py to right_hand_solver.cpython-312.pyc
+[2.705s] running install_data
+[2.706s] running install_egg_info
+[2.761s] removing '/home/kazaki/enae450-s26/final competition/enae450-final-competition/final-comp/install/final-comp/lib/python3.12/site-packages/final_comp-0.0.0-py3.12.egg-info' (and everything under it)
+[2.763s] Copying build/final-comp/final_comp.egg-info to /home/kazaki/enae450-s26/final competition/enae450-final-competition/final-comp/install/final-comp/lib/python3.12/site-packages/final_comp-0.0.0-py3.12.egg-info
+[2.771s] running install_scripts
+[3.052s] Installing maze_solver script to /home/kazaki/enae450-s26/final competition/enae450-final-competition/final-comp/install/final-comp/lib/final-comp
+[3.052s] Installing move_robot script to /home/kazaki/enae450-s26/final competition/enae450-final-competition/final-comp/install/final-comp/lib/final-comp
+[3.052s] Installing right_hand_solver script to /home/kazaki/enae450-s26/final competition/enae450-final-competition/final-comp/install/final-comp/lib/final-comp
+[3.053s] Installing slam_map_viewer script to /home/kazaki/enae450-s26/final competition/enae450-final-competition/final-comp/install/final-comp/lib/final-comp
+[3.053s] Installing view_map script to /home/kazaki/enae450-s26/final competition/enae450-final-competition/final-comp/install/final-comp/lib/final-comp
+[3.053s] writing list of installed files to '/home/kazaki/enae450-s26/final competition/enae450-final-competition/final-comp/build/final-comp/install.log'
+[3.139s] Invoked command in '/home/kazaki/enae450-s26/final competition/enae450-final-competition/final-comp' returned '0': PYTHONPATH=/home/kazaki/enae450-s26/final competition/enae450-final-competition/final-comp/build/final-comp/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/kazaki/enae450-s26/final competition/enae450-final-competition/final-comp/install/final-comp/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base build/final-comp build --build-base /home/kazaki/enae450-s26/final competition/enae450-final-competition/final-comp/build/final-comp/build install --record /home/kazaki/enae450-s26/final competition/enae450-final-competition/final-comp/build/final-comp/install.log --single-version-externally-managed install_data

@@ -1,5 +1,6 @@
 [console_scripts]
-maze_solver = final_comp.maze_solver:main
-move_robot = final_comp.move_robot:main
-slam_map_viewer = final_comp.slam_map_viewer:main
-view_map = final_comp.view_map:main
+maze_solver = src.maze_solver:main
+move_robot = src.move_robot:main
+right_hand_solver = src.right_hand_solver:main
+slam_map_viewer = src.slam_map_viewer:main
+view_map = src.view_map:main

@@ -57,3 +57,7 @@ Run a file directly for debugging:
 Check executable names:
 
   ros2 pkg executables final_comp
+
+Run gazebo simulator:
+
+  ros2 launch turtlebot4_gz_bringup turtlebot4_gz.launch.py
