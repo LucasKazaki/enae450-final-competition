@@ -11,6 +11,7 @@ build/final-comp/final_comp.egg-info/zip-safe
 resource/final-comp
 src/__init__.py
 src/draw_to_tb4_gazebo_world.py
+src/draw_to_tb4_gazebo_world_compressed.py
 src/maze_solver.py
 src/move_robot.py
 src/right_hand_solver.py

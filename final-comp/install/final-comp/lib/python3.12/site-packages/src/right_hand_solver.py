@@ -5,6 +5,7 @@ import rclpy
 from rclpy.node import Node
 from sensor_msgs.msg import LaserScan
 from geometry_msgs.msg import TwistStamped
+import time
 
 
 class RightHandWallFollower(Node):
@@ -56,7 +57,7 @@ class RightHandWallFollower(Node):
         +90 degrees = left
         -90 degrees = right
         """
-        angle_rad = math.radians(angle_deg)
+        angle_rad = math.radians(angle_deg - 90) #-90 degrees is front, offset
         window_rad = math.radians(window_deg)
 
         values = []
@@ -94,6 +95,15 @@ class RightHandWallFollower(Node):
 
         front_clear = front > self.front_blocked_dist
         right_wall = right < self.open_space_dist
+        
+        #check if out of maze first
+        if self.get_range_at_angle(scan, -90, 90) > self.front_blocked_dist:
+            #do a 180 and stop
+            cmd.twist.angular.z = self.turn_speed
+            time.sleep(1 / self.turn_speed * math.pi / 2)
+            cmd.twist.angular.z = 0
+            exit
+
 
         if front_clear and right_wall:
             # Normal case: follow the right wall forward.
