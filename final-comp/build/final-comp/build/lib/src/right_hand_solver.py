@@ -13,8 +13,8 @@ class RightHandWallFollower(Node):
         super().__init__("right_hand_wall_follower")
 
         # Change these if your simulator uses namespaced topics like /tb4_3/scan
-        self.scan_topic = self.declare_parameter("scan_topic", "/scan").value
-        self.cmd_topic = self.declare_parameter("cmd_topic", "/cmd_vel").value
+        self.scan_topic = self.declare_parameter("scan_topic", "scan").value
+        self.cmd_topic = self.declare_parameter("cmd_topic", "cmd_vel").value
 
         self.scan_sub = self.create_subscription(
             LaserScan,
