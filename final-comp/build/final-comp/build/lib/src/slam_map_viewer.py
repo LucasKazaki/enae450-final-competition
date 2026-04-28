@@ -215,7 +215,7 @@ def draw_loop(viewer):
     plt.show()
 
 
-def main():
+def main(args=None):
     parser = argparse.ArgumentParser()
 
     parser.add_argument("--scan-topic", default="scan")
@@ -243,13 +243,13 @@ def main():
     try:
         slam_cmd = [
             "ros2", "run", "slam_toolbox", "async_slam_toolbox_node",
-            "--ros-args",
+            "--ros-args", "-r", "__ns:=/tb4_5",
             "--params-file", params_file,
         ]
 
         procs.append(run_cmd(slam_cmd, "slam_toolbox"))
 
-        rclpy.init()
+        rclpy.init(args=["--ros-args", "-r", "__ns:=/tb4_5"])
         viewer = MatplotlibMapViewer(args)
 
         spin_thread = threading.Thread(

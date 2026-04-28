@@ -29,24 +29,50 @@ class RightHandWallFollower(Node):
             10
         )
 
-        self.timer = self.create_timer(0.1, self.control_loop)
+        self.timer = self.create_timer(0.01, self.control_loop)
 
         self.latest_scan = None
 
         # Tunable parameters
-        self.target_right_dist = 0.45   # meters from right wall
-        self.too_close_right = 0.30
-        self.front_blocked_dist = 0.55
-        self.open_space_dist = 0.75
+        self.target_right_dist = float(0.2)   # meters from right wall
+        self.too_close_right = float(0.1)
+        self.front_blocked_dist = float(0.5)
+        self.open_space_dist = float(1.0)
 
-        self.forward_speed = 0.18
-        self.turn_speed = 0.55
+        self.forward_speed = float(0.2)
+        self.turn_speed = float(0.5)
 
         self.get_logger().info("Right hand wall follower started.")
         self.get_logger().info(f"Subscribing to {self.scan_topic}, publishing to {self.cmd_topic}")
 
     def scan_callback(self, msg):
         self.latest_scan = msg
+
+    def get_max_range_at_angle(self, scan, angle_deg, window_deg=10):
+        """
+        Returns the maximum valid lidar distance near a desired angle.
+
+        Assumes standard ROS LaserScan angle convention:
+        0 degrees = front
+        +90 degrees = left
+        -90 degrees = right
+        """
+        angle_rad = math.radians(angle_deg - 90) #-90 degrees is front, offset
+        window_rad = math.radians(window_deg)
+
+        values = []
+
+        for i, r in enumerate(scan.ranges):
+            angle = scan.angle_min + i * scan.angle_increment
+
+            if abs(angle - angle_rad) <= window_rad:
+                if math.isfinite(r) and scan.range_min < r < scan.range_max:
+                    values.append(r)
+
+        if len(values) == 0:
+            return float("inf")
+
+        return max(values)
 
     def get_range_at_angle(self, scan, angle_deg, window_deg=10):
         """
@@ -97,16 +123,22 @@ class RightHandWallFollower(Node):
         right_wall = right < self.open_space_dist
         
         #check if out of maze first
-        if self.get_range_at_angle(scan, -90, 90) > self.front_blocked_dist:
+        if self.get_range_at_angle(scan, -90, 90) > self.open_space_dist:
+            print(self.get_range_at_angle(scan, -90, 90))
+            print("open space on all sides, likely out of maze")
             #do a 180 and stop
+            state = "open space on all sides, likely out of maze, doing 180 and stopping"
             cmd.twist.angular.z = self.turn_speed
+            self.cmd_pub.publish(cmd)
             time.sleep(1 / self.turn_speed * math.pi / 2)
-            cmd.twist.angular.z = 0
-            exit
+            cmd.twist.angular.z = 0.0
+            self.cmd_pub.publish(cmd)
+            quit()
 
 
         elif front_clear and right_wall:
             # Normal case: follow the right wall forward.
+            print("front clear and right wall exists")
             cmd.twist.linear.x = self.forward_speed
 
             # Small correction to keep a reasonable distance from the wall.
@@ -121,12 +153,14 @@ class RightHandWallFollower(Node):
                 state = "front clear, following right wall"
 
         elif not right_wall:
+            print("no right wall")
             # No wall on the right, so turn right until we find one.
             cmd.twist.linear.x = 0.05
             cmd.twist.angular.z = -self.turn_speed * 0.75
             state = "no right wall, turning right"
 
         else:
+            print("right wall exists but front blocked")
             # Right wall exists, but front is blocked, so turn left.
             cmd.twist.linear.x = 0.0
             cmd.twist.angular.z = self.turn_speed
