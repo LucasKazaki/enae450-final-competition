@@ -39,8 +39,8 @@ class RightHandWallFollower(Node):
         self.front_blocked_dist = float(0.5)
         self.open_space_dist = float(1.0)
 
-        self.forward_speed = float(0.2)
-        self.turn_speed = float(0.5)
+        self.forward_speed = float(0.1)
+        self.turn_speed = float(0.3)
 
         self.get_logger().info("Right hand wall follower started.")
         self.get_logger().info(f"Subscribing to {self.scan_topic}, publishing to {self.cmd_topic}")
@@ -106,9 +106,9 @@ class RightHandWallFollower(Node):
 
         scan = self.latest_scan
 
-        front = self.get_range_at_angle(scan, 0, 15)
-        front_right = self.get_range_at_angle(scan, -45, 15)
-        right = self.get_range_at_angle(scan, -90, 15)
+        front = self.get_range_at_angle(scan, -10, 10)
+        front_right = self.get_range_at_angle(scan, -45, 10)
+        right = self.get_range_at_angle(scan, -90, 0)
 
         cmd = TwistStamped()
         cmd.header.stamp = self.get_clock().now().to_msg()
@@ -123,11 +123,15 @@ class RightHandWallFollower(Node):
         right_wall = right < self.open_space_dist
         
         #check if out of maze first
-        if self.get_range_at_angle(scan, -90, 90) > self.open_space_dist:
+        if self.get_range_at_angle(scan, -80, 80) > self.open_space_dist:
             print(self.get_range_at_angle(scan, -90, 90))
             print("open space on all sides, likely out of maze")
             #do a 180 and stop
             state = "open space on all sides, likely out of maze, doing 180 and stopping"
+            cmd.twist.linear.x = 1.0
+            self.cmd_pub.publish(cmd)
+            time.sleep(0.5)
+            cmd.twist.linear.x = 0.0
             cmd.twist.angular.z = self.turn_speed
             self.cmd_pub.publish(cmd)
             time.sleep(1 / self.turn_speed * math.pi / 2)
