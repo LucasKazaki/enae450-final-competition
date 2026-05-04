@@ -157,7 +157,7 @@ def main():
     )
     parser.add_argument(
         "--cmd-topic",
-        default="/tb4_4/cmd_vel",
+        default="/tb4_5/cmd_vel",
         help="cmd_vel topic to record or publish",
     )
     parser.add_argument(

@@ -34,13 +34,13 @@ class RightHandWallFollower(Node):
         self.latest_scan = None
 
         # Tunable parameters
-        self.target_right_dist = float(0.4)   # meters from right wall
+        self.target_right_dist = float(0.5)   # meters from right wall
         self.too_close_right = float(0.3)
-        self.front_blocked_dist = float(0.4)
+        self.front_blocked_dist = float(0.3)
         self.open_space_dist = float(1.0)
 
         self.forward_speed = float(0.1)
-        self.turn_speed = float(0.3)
+        self.turn_speed = float(0.5)
 
         self.get_logger().info("Right hand wall follower started.")
         self.get_logger().info(f"Subscribing to {self.scan_topic}, publishing to {self.cmd_topic}")
@@ -64,10 +64,13 @@ class RightHandWallFollower(Node):
 
         for i, r in enumerate(scan.ranges):
             angle = scan.angle_min + i * scan.angle_increment
-
+            angle_diff = (angle - angle_rad + math.pi) % (2 * math.pi) - math.pi
+    
+            # if abs(angle_diff) <= window_rad:
             if abs(angle - angle_rad) <= window_rad:
-                if math.isfinite(r) and scan.range_min < r < scan.range_max:
-                    values.append(r)
+                    if math.isfinite(r) and scan.range_min < r < scan.range_max:
+                        values.append(r)
+
 
         if len(values) == 0:
             return float("inf")
@@ -90,14 +93,21 @@ class RightHandWallFollower(Node):
 
         for i, r in enumerate(scan.ranges):
             angle = scan.angle_min + i * scan.angle_increment
-
+            angle_diff = (angle - angle_rad + math.pi) % (2 * math.pi) - math.pi
+    
+            # print("angle_diff:" + str(angle-angle_rad) + "; window_rad:" + str(window_rad))
+            # if abs(angle_diff) <= window_rad:
             if abs(angle - angle_rad) <= window_rad:
                 if math.isfinite(r) and scan.range_min < r < scan.range_max:
                     values.append(r)
 
         if len(values) == 0:
+            print("failed values: " + str(values))
+            print("target angle (rad):", angle_rad)
+            print("scan min/max:", scan.angle_min, scan.angle_max)
             return float("inf")
 
+        # print(min(values))
         return min(values)
 
     def control_loop(self):
@@ -106,9 +116,10 @@ class RightHandWallFollower(Node):
 
         scan = self.latest_scan
 
-        front = self.get_range_at_angle(scan, -15, 15)
-        front_right = self.get_range_at_angle(scan, -45, 10)
-        right = self.get_range_at_angle(scan, -120, 0)
+        front = self.get_range_at_angle(scan, -10, 10)
+        print("front: " + str(front))
+        right = self.get_range_at_angle(scan, -90, 60)
+        print("right: " + str(right))
 
         cmd = TwistStamped()
         cmd.header.stamp = self.get_clock().now().to_msg()
@@ -120,67 +131,85 @@ class RightHandWallFollower(Node):
         # 3. If there is a wall on the right and a wall in front, turn left.
 
         front_clear = front > self.front_blocked_dist
-        right_wall = right < self.front_blocked_dist
+        right_wall = right < self.open_space_dist
+        
+        """
+        # spin-in-place testing
+        # left turn is positive angular.z
+        # right turn is negative angular.z
+        cmd.twist.linear.x = 0.0
+        cmd.twist.angular.z = self.turn_speed * 0.5
+        self.cmd_pub.publish(cmd)
+        return
+        """
         
         #check if out of maze first
-        if self.get_range_at_angle(scan, -80, 80) > self.open_space_dist:
-            print(self.get_range_at_angle(scan, -90, 90))
-            print("open space on all sides, likely out of maze")
-            #do a 180 and stop
-            state = "open space on all sides, likely out of maze, doing 180 and stopping"
+        if ((self.get_range_at_angle(scan, 0, 60) > self.open_space_dist) or (right_wall and (self.get_range_at_angle(90, 45) > 1.0))):
+            print(self.get_range_at_angle(scan, 0, 80))
+            print("\n|||***open space on all sides, likely out of maze***|||")
+            print("- doing 180 and stopping")
+            # do a 180 and stop
+            # state = "open space on all sides, likely out of maze, doing 180 and stopping"
+            
             cmd.twist.linear.x = 1.0
             self.cmd_pub.publish(cmd)
             time.sleep(0.5)
             cmd.twist.linear.x = 0.0
-            cmd.twist.angular.z = self.turn_speed
+            cmd.twist.angular.z = math.pi
             self.cmd_pub.publish(cmd)
-            time.sleep(1 / self.turn_speed * math.pi / 2)
+            print("b")
+            time.sleep(1 * math.pi)
             cmd.twist.angular.z = 0.0
             self.cmd_pub.publish(cmd)
             quit()
-
-
+        
         elif front_clear and right_wall:
             # Normal case: follow the right wall forward.
-            print("front clear and right wall exists")
-            cmd.twist.linear.x = self.forward_speed
+            print("\n***front clear and right wall exists***")
+            cmd.twist.linear.x = self.forward_speed * 0.5
 
             # Small correction to keep a reasonable distance from the wall.
             if right < self.too_close_right:
-                cmd.twist.angular.z = self.turn_speed * 0.35
-                state = "front clear, right wall too close, steering left"
+                """
+                if right < 0.22:
+                    print("- right wall WAY too close, steering left")
+                    cmd.twist.linear.x = self.forward_speed * 0.01
+                    cmd.twist.angular.z = self.turn_speed * 0.1
+                else: 
+                    print("- right wall too close, steering left") 
+                    cmd.twist.angular.z = self.turn_speed * 0.5
+                """
+                print("- right wall too close, steering left") 
+                cmd.twist.angular.z = self.turn_speed * 0.2
+                    
             elif right > self.target_right_dist:
-                cmd.twist.angular.z = -self.turn_speed * 0.20
-                state = "front clear, right wall too far, steering right"
+                cmd.twist.angular.z = -self.turn_speed
+                print("- right wall too far, steering right")
             else:
-                cmd.twist.angular.z = 0.0
-                state = "front clear, following right wall"
+                cmd.twist.angular.z = self.turn_speed * 0.0
+                print("- following right wall")
 
-        elif not right_wall and front_clear:
-            print("no right wall")
+        elif not right_wall:
+            print("\n***no right wall***")
+            print("- turning right")
+            # print("right_wall:" + str(right_wall) + "; right:" + str(right) + "; right_proper:" + str(self.get_range_at_angle(scan, -90, 0)) + "; open_space_dist:" + str(self.open_space_dist))
             # No wall on the right, so turn right until we find one.
             cmd.twist.linear.x = 0.05
             cmd.twist.angular.z = -self.turn_speed * 0.75
-            state = "no right wall, turning right"
 
-        elif right_wall and not front_clear:
-            print("right wall exists but front blocked")
+        else:
+            print("\n***right wall exists but front blocked***")
             # Right wall exists, but front is blocked, so turn left.
             cmd.twist.linear.x = 0.0
             cmd.twist.angular.z = self.turn_speed
-            state = "right wall and front blocked, turning left"
-        
-        elif not right_wall and not front_clear:
-            print("no right wall and front blocked")
-            # No right wall and front is blocked, so turn left (maybe we're in a dead end).
-            cmd.twist.linear.x = 0.0
-            cmd.twist.angular.z = self.turn_speed
-            state = "no right wall and front blocked, turning left"
+            print("- turning left")
 
+        state = "ignore, look to print statements instead"
+        
         self.cmd_pub.publish(cmd)
 
         self.get_logger().info(
-            f"{state} | front={front:.2f}, right={right:.2f}, front_right={front_right:.2f}",
+            f"{state} | front={front:.2f}, right={right:.2f}",
             throttle_duration_sec=1.0
         )
 

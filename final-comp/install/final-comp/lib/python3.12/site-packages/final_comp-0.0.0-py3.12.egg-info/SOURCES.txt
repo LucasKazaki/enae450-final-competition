@@ -11,6 +11,7 @@ build/final-comp/final_comp.egg-info/zip-safe
 launch/slam_launch.py
 resource/final-comp
 src/__init__.py
+src/bag_cmd_vel_player.py
 src/draw_to_tb4_gazebo_world.py
 src/draw_to_tb4_gazebo_world_compressed.py
 src/maze_solver.py
@@ -19,6 +20,7 @@ src/right_hand_solver.py
 src/slam_auto_viewer.py
 src/slam_launch.py
 src/slam_map_viewer.py
+src/teleop.py
 src/view_map.py
 test/test_copyright.py
 test/test_flake8.py

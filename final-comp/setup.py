@@ -34,6 +34,8 @@ setup(
             'right_hand_solver = src.right_hand_solver:main',
             'slam_launch = src.slam_launch:generate_launch_description',
             'slam_auto_viewer = src.slam_auto_viewer:main',
+            'bag_cmd_vel_player = src.bag_cmd_vel_player:main',
+            'teleop = src.teleop:main',
         ],
     },
 )
