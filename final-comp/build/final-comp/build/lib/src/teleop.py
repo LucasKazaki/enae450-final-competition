@@ -52,7 +52,7 @@ class KeyboardTeleop(Node):
         super().__init__("keyboard_teleop")
 
         self.cmd_topic = self.declare_parameter(
-            "cmd_topic", "/tb4_5/cmd_vel"
+            "cmd_topic", "/tb4_4/cmd_vel"
         ).value
 
         self.pub = self.create_publisher(TwistStamped, self.cmd_topic, 10)
@@ -140,4 +140,4 @@ def main():
 if __name__ == "__main__":
     main()
 
-'''python3 keyboard_teleop.py --ros-args -p cmd_topic:=/tb4_5/cmd_vel'''
+'''python3 keyboard_teleop.py --ros-args -p cmd_topic:=/tb4_4/cmd_vel'''

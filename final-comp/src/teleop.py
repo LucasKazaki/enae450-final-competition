@@ -140,4 +140,4 @@ def main():
 if __name__ == "__main__":
     main()
 
-'''python3 keyboard_teleop.py --ros-args -p cmd_topic:=/tb4_4/cmd_vel'''
+'''ros2 run final-comp teleop --ros-args -p cmd_topic:=/tb4_4/cmd_vel'''

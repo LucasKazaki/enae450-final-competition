@@ -184,21 +184,22 @@ def main():
             node.publish_stop()
     finally:
         node.destroy_node()
-        rclpy.shutdown()
 
+        if rclpy.ok():
+            rclpy.shutdown()
 
 if __name__ == "__main__":
     main()
 
-'''record mode: python3 bag_cmd_vel_player.py record \
+'''record mode: ros2 run bag_cmd_vel_player record \
   --bag my_teleop_run \
-  --cmd-topic /tb4_5/cmd_vel
-  
-  follow mode: python3 bag_cmd_vel_player.py follow \
+  --cmd-topic /tb4_4/cmd_vel
+
+  follow mode: ros2 run bag_cmd_vel_player follow \
   --bag my_teleop_run \
-  --cmd-topic /tb4_5/cmd_vel
-  
-  faster playback: python3 bag_cmd_vel_player.py follow \
+  --cmd-topic /tb4_4/cmd_vel
+
+  faster playback: ros2 run bag_cmd_vel_player follow \
   --bag my_teleop_run \
-  --cmd-topic /tb4_5/cmd_vel \
+  --cmd-topic /tb4_4/cmd_vel \
   --rate-scale 1.5'''
