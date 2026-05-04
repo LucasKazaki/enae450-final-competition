@@ -49,6 +49,11 @@ class RobotMover(Node):
         self.get_logger().info('Moving forward 1m again...')
         self.send_vel(linear=self.linear_speed, duration=self.dist / self.linear_speed)
         
+        time.sleep(1.0) # Short pause
+
+        self.get_logger().info('Turning 180 degrees...')
+        self.send_vel(angular=self.angular_speed, duration=self.angle / self.angular_speed)
+
         self.get_logger().info('Sequence complete.')
 
 def main(args=None):

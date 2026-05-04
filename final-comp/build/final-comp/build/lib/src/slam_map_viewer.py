@@ -21,7 +21,7 @@ from sensor_msgs.msg import LaserScan
 
 def write_params(args):
     params = f"""
-slam_toolbox:
+async_slam_toolbox:
   ros__parameters:
     use_sim_time: {str(args.use_sim_time).lower()}
     mode: mapping
@@ -218,7 +218,7 @@ def draw_loop(viewer):
 def main(args=None):
     parser = argparse.ArgumentParser()
 
-    parser.add_argument("--scan-topic", default="scan")
+    parser.add_argument("--scan-topic", default="/tb4_5/scan")
     parser.add_argument("--map-topic", default="map")
     parser.add_argument("--odom-topic", default="odom")
 
@@ -242,9 +242,8 @@ def main(args=None):
 
     try:
         slam_cmd = [
-            "ros2", "run", "slam_toolbox", "async_slam_toolbox_node",
-            "--ros-args", "-r", "__ns:=/tb4_5",
-            "--params-file", params_file,
+            "ros2", "launch", "slam_toolbox", "online_async_launch.py",
+            "namespace:=tb4_5",
         ]
 
         procs.append(run_cmd(slam_cmd, "slam_toolbox"))

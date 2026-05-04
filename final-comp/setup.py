@@ -1,4 +1,6 @@
 from setuptools import find_packages, setup
+from glob import glob
+import os
 
 package_name = 'final-comp'
 
@@ -10,6 +12,7 @@ setup(
         ('share/ament_index/resource_index/packages',
             ['resource/' + package_name]),
         ('share/' + package_name, ['package.xml']),
+        (os.path.join('share', package_name, 'launch'), glob('launch/*.py')),
     ],
     install_requires=['setuptools'],
     zip_safe=True,
@@ -29,6 +32,8 @@ setup(
             'slam_map_viewer = src.slam_map_viewer:main',
             'maze_solver = src.maze_solver:main',
             'right_hand_solver = src.right_hand_solver:main',
+            'slam_launch = src.slam_launch:generate_launch_description',
+            'slam_auto_viewer = src.slam_auto_viewer:main',
         ],
     },
 )

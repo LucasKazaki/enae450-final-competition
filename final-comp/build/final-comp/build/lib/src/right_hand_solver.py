@@ -34,9 +34,9 @@ class RightHandWallFollower(Node):
         self.latest_scan = None
 
         # Tunable parameters
-        self.target_right_dist = float(0.2)   # meters from right wall
-        self.too_close_right = float(0.1)
-        self.front_blocked_dist = float(0.5)
+        self.target_right_dist = float(0.4)   # meters from right wall
+        self.too_close_right = float(0.3)
+        self.front_blocked_dist = float(0.4)
         self.open_space_dist = float(1.0)
 
         self.forward_speed = float(0.1)
@@ -106,9 +106,9 @@ class RightHandWallFollower(Node):
 
         scan = self.latest_scan
 
-        front = self.get_range_at_angle(scan, -10, 10)
+        front = self.get_range_at_angle(scan, -15, 15)
         front_right = self.get_range_at_angle(scan, -45, 10)
-        right = self.get_range_at_angle(scan, -90, 0)
+        right = self.get_range_at_angle(scan, -120, 0)
 
         cmd = TwistStamped()
         cmd.header.stamp = self.get_clock().now().to_msg()
@@ -120,7 +120,7 @@ class RightHandWallFollower(Node):
         # 3. If there is a wall on the right and a wall in front, turn left.
 
         front_clear = front > self.front_blocked_dist
-        right_wall = right < self.open_space_dist
+        right_wall = right < self.front_blocked_dist
         
         #check if out of maze first
         if self.get_range_at_angle(scan, -80, 80) > self.open_space_dist:
@@ -156,19 +156,26 @@ class RightHandWallFollower(Node):
                 cmd.twist.angular.z = 0.0
                 state = "front clear, following right wall"
 
-        elif not right_wall:
+        elif not right_wall and front_clear:
             print("no right wall")
             # No wall on the right, so turn right until we find one.
             cmd.twist.linear.x = 0.05
             cmd.twist.angular.z = -self.turn_speed * 0.75
             state = "no right wall, turning right"
 
-        else:
+        elif right_wall and not front_clear:
             print("right wall exists but front blocked")
             # Right wall exists, but front is blocked, so turn left.
             cmd.twist.linear.x = 0.0
             cmd.twist.angular.z = self.turn_speed
             state = "right wall and front blocked, turning left"
+        
+        elif not right_wall and not front_clear:
+            print("no right wall and front blocked")
+            # No right wall and front is blocked, so turn left (maybe we're in a dead end).
+            cmd.twist.linear.x = 0.0
+            cmd.twist.angular.z = self.turn_speed
+            state = "no right wall and front blocked, turning left"
 
         self.cmd_pub.publish(cmd)
 
