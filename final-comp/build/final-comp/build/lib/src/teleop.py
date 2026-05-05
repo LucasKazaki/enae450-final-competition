@@ -102,6 +102,9 @@ class KeyboardTeleop(Node):
             self.angular_speed *= 0.9
             print(f"Speed decreased: linear={self.linear_speed:.2f}, angular={self.angular_speed:.2f}")
 
+        elif key == "\x03":  # Ctrl+C
+            raise KeyboardInterrupt
+
         elif key is not None:
             # Unknown key → stop
             self.current_linear = 0.0
@@ -124,7 +127,7 @@ def main():
     try:
         rclpy.spin(node)
     except KeyboardInterrupt:
-        pass
+        node.get_logger().info("Ctrl+C detected. Stopping teleop.")
     finally:
         # Send stop command on exit
         stop = TwistStamped()
