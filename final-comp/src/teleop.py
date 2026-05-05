@@ -27,7 +27,7 @@ e: decrease speed
 space: stop
 CTRL+C: quit
 """
-
+cmd_topic = "/tb4_6/cmd_vel"
 
 def get_key(timeout=0.1):
     """Non-blocking keyboard input"""
@@ -52,7 +52,7 @@ class KeyboardTeleop(Node):
         super().__init__("keyboard_teleop")
 
         self.cmd_topic = self.declare_parameter(
-            "cmd_topic", "/tb4_4/cmd_vel"
+            "cmd_topic", cmd_topic
         ).value
 
         self.pub = self.create_publisher(TwistStamped, self.cmd_topic, 10)
