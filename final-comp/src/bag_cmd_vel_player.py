@@ -1,14 +1,14 @@
 #!/usr/bin/env python3
 
 import argparse
+import math
 import os
 import time
-import math
 
 import rclpy
 from rclpy.node import Node
-from rclpy.serialization import serialize_message, deserialize_message
 from rclpy.qos import qos_profile_sensor_data
+from rclpy.serialization import serialize_message, deserialize_message
 
 from geometry_msgs.msg import TwistStamped
 from sensor_msgs.msg import LaserScan
@@ -20,11 +20,18 @@ TOPIC_TYPE = "geometry_msgs/msg/TwistStamped"
 
 
 class CmdVelBagTool(Node):
-    def __init__(self, mode, bag_path, namespace, rate_scale, center_before_run):
+    def __init__(
+        self,
+        mode,
+        bag_path,
+        namespace,
+        rate_scale,
+        center_before_run,
+        lidar_angle_offset_deg=0.0,
+        open_threshold_m=1.0,
+    ):
         super().__init__("cmd_vel_bag_tool")
 
-        self.mode = mode
-        self.bag_path = bag_path
         namespace = namespace.rstrip("/")
         if namespace == "":
             self.cmd_topic = "/cmd_vel"
@@ -32,24 +39,37 @@ class CmdVelBagTool(Node):
         else:
             self.cmd_topic = namespace + "/cmd_vel"
             self.scan_topic = namespace + "/scan"
+
+        self.mode = mode
+        self.bag_path = bag_path
         self.rate_scale = rate_scale
         self.center_before_run = center_before_run
+        self.lidar_angle_offset_deg = float(lidar_angle_offset_deg)
+        self.open_threshold_m = float(open_threshold_m)
+
+        self.latest_scan = None
 
         self.scan_sub = self.create_subscription(
             LaserScan,
             self.scan_topic,
             self.scan_callback,
-            qos_profile_sensor_data
+            qos_profile_sensor_data,
         )
-        self.latest_scan = None
         self.pub = self.create_publisher(TwistStamped, self.cmd_topic, 10)
 
-        if self.mode == "record":
+        self.get_logger().info(f"Scan topic: {self.scan_topic}")
+        self.get_logger().info(f"Cmd topic:  {self.cmd_topic}")
+
+        if self.mode == "center":
+            if not self.center_robot():
+                raise RuntimeError("Centering failed.")
+            self.get_logger().info("Center-only mode complete.")
+        elif self.mode == "record":
             self.start_recording()
         elif self.mode == "follow":
             self.start_following()
         else:
-            raise ValueError("mode must be record or follow")
+            raise ValueError("mode must be center, record, or follow")
 
     def scan_callback(self, msg):
         self.latest_scan = msg
@@ -139,6 +159,7 @@ class CmdVelBagTool(Node):
         while self.reader.has_next() and rclpy.ok():
             topic, data, timestamp = self.reader.read_next()
 
+            # Allows replaying a bag recorded under /tb4_4 onto /tb4_5, etc.
             if not topic.endswith("/cmd_vel"):
                 continue
 
@@ -159,18 +180,8 @@ class CmdVelBagTool(Node):
         self.get_logger().info("Finished following bag. Published stop command.")
 
     def publish_stop(self):
-        stop = TwistStamped()
-        stop.header.stamp = self.get_clock().now().to_msg()
-        stop.header.frame_id = "base_footprint"
-        stop.twist.linear.x = 0.0
-        stop.twist.linear.y = 0.0
-        stop.twist.linear.z = 0.0
-        stop.twist.angular.x = 0.0
-        stop.twist.angular.y = 0.0
-        stop.twist.angular.z = 0.0
-        self.pub.publish(stop)
+        self.stop_robot()
 
-    
     def make_cmd(self, linear_x=0.0, angular_z=0.0):
         cmd = TwistStamped()
         cmd.header.stamp = self.get_clock().now().to_msg()
@@ -184,41 +195,48 @@ class CmdVelBagTool(Node):
 
         while rclpy.ok() and self.latest_scan is None:
             rclpy.spin_once(self, timeout_sec=0.05)
-
             if time.time() - start > timeout_sec:
                 self.get_logger().warn("Timed out waiting for LaserScan.")
                 return False
 
-        return True
+        return self.latest_scan is not None
+
+    def refresh_scan(self, samples=3, timeout_sec=0.25):
+        """
+        Spin a few times so latest_scan is not stale after a move.
+        """
+        if not self.wait_for_scan(timeout_sec=timeout_sec):
+            return False
+
+        for _ in range(samples):
+            rclpy.spin_once(self, timeout_sec=timeout_sec)
+            time.sleep(0.02)
+
+        return self.latest_scan is not None
 
     def stop_robot(self, repeats=5):
         for _ in range(repeats):
             self.pub.publish(self.make_cmd(0.0, 0.0))
+            rclpy.spin_once(self, timeout_sec=0.01)
             time.sleep(0.05)
 
     def angle_diff(self, a, b):
-        """
-        Smallest signed angular difference a - b, in radians.
-        """
         return (a - b + math.pi) % (2.0 * math.pi) - math.pi
 
+    def scan_index_to_body_angle_deg(self, scan, index):
+        """
+        Convert scan index to robot-body angle, using:
+        0 deg = front, +90 deg = left, -90 deg = right.
+        """
+        raw_angle_rad = scan.angle_min + index * scan.angle_increment
+        body_angle_deg = math.degrees(raw_angle_rad) - self.lidar_angle_offset_deg
+        return (body_angle_deg + 180.0) % 360.0 - 180.0
+
+    def body_angle_deg_to_scan_angle_rad(self, body_angle_deg):
+        return math.radians(body_angle_deg + self.lidar_angle_offset_deg)
+
     def get_sector_ranges(self, scan, center_deg, window_deg=8.0):
-        """
-        Returns valid lidar ranges in a body-frame sector.
-
-        Convention used here:
-        0 deg = front
-        +90 deg = left
-        -90 deg = right
-        +/-180 deg = back
-
-        This assumes the LaserScan angles are already in the robot/base scan frame,
-        which is normal for ROS LaserScan. If your robot's scan appears rotated,
-        change lidar_angle_offset_deg below.
-        """
-        lidar_angle_offset_deg = 0.0
-
-        center_rad = math.radians(center_deg + lidar_angle_offset_deg)
+        center_rad = self.body_angle_deg_to_scan_angle_rad(center_deg)
         window_rad = math.radians(window_deg)
 
         values = []
@@ -230,16 +248,11 @@ class CmdVelBagTool(Node):
                 if math.isfinite(r) and scan.range_min < r < scan.range_max:
                     values.append(float(r))
                 elif math.isinf(r):
-                    # Treat inf as "very open" but cap it at range_max.
                     values.append(float(scan.range_max))
 
         return values
 
     def percentile(self, values, p):
-        """
-        Simple percentile without numpy.
-        p is 0.0 to 1.0.
-        """
         if not values:
             return None
 
@@ -249,62 +262,134 @@ class CmdVelBagTool(Node):
         return vals[idx]
 
     def get_wall_distance(self, scan, angle_deg, window_deg=12.0):
-        """
-        Estimate nearby wall distance in a direction.
-
-        Uses a low percentile instead of raw min to avoid one bad lidar return
-        dominating the result.
-        """
         values = self.get_sector_ranges(scan, angle_deg, window_deg)
-
         if len(values) < 3:
             return None
-
         return self.percentile(values, 0.20)
 
     def get_open_distance(self, scan, angle_deg, window_deg=10.0):
-        """
-        Estimate how open a direction is.
-
-        Uses a high percentile so an open corridor scores high even if there are
-        a few noisy closer readings.
-        """
         values = self.get_sector_ranges(scan, angle_deg, window_deg)
-
         if len(values) < 3:
             return None
-
         return self.percentile(values, 0.80)
 
-    def find_farthest_open_angle(self, scan):
+    def is_open_reading(self, scan, r):
+        if math.isinf(r):
+            return True
+        if not math.isfinite(r):
+            return False
+        if r <= scan.range_min:
+            return False
+        return r >= min(self.open_threshold_m, scan.range_max * 0.95)
+
+    def circular_mean_deg(self, angles_deg):
         """
-        Find the direction with the largest open-space score.
-        Returns angle in degrees, using:
-        0 = front, +90 = left, -90 = right.
+        Mean direction for angles that may wrap around +/-180.
+        """
+        if not angles_deg:
+            return 0.0
+
+        sx = 0.0
+        sy = 0.0
+        for a in angles_deg:
+            ar = math.radians(a)
+            sx += math.cos(ar)
+            sy += math.sin(ar)
+
+        return (math.degrees(math.atan2(sy, sx)) + 180.0) % 360.0 - 180.0
+
+    def find_largest_opening_center_angle(self, scan):
+        """
+        Find the center of the largest contiguous open lidar arc.
+
+        This is still cheap: it is O(N) over one LaserScan. With typical lidar
+        sizes, it should take milliseconds, not seconds.
+        """
+        n = len(scan.ranges)
+        if n == 0:
+            return None, 0.0, 0
+
+        open_flags = [self.is_open_reading(scan, r) for r in scan.ranges]
+
+        if not any(open_flags):
+            return None, 0.0, 0
+
+        if all(open_flags):
+            # Completely open around the robot, so preserve current heading.
+            return 0.0, 360.0, n
+
+        doubled = open_flags + open_flags
+        best_start = 0
+        best_len = 0
+        cur_start = None
+        cur_len = 0
+
+        for i, flag in enumerate(doubled):
+            if flag:
+                if cur_start is None:
+                    cur_start = i
+                    cur_len = 1
+                else:
+                    cur_len += 1
+
+                # Do not allow a segment longer than one full scan.
+                if cur_len > n:
+                    cur_start += 1
+                    cur_len = n
+
+                if cur_len > best_len and cur_start < n:
+                    best_start = cur_start
+                    best_len = cur_len
+            else:
+                cur_start = None
+                cur_len = 0
+
+        best_indices = [(best_start + k) % n for k in range(best_len)]
+        angles = [self.scan_index_to_body_angle_deg(scan, i) for i in best_indices]
+        center_angle = self.circular_mean_deg(angles)
+        arc_width_deg = best_len * abs(math.degrees(scan.angle_increment))
+
+        return center_angle, arc_width_deg, best_len
+
+    def find_fallback_open_angle(self, scan):
+        """
+        Fallback if there is no clear contiguous opening above open_threshold_m.
+        Uses a smoothed openness score every 5 degrees.
         """
         best_angle = 0.0
         best_score = -1.0
 
-        # Search every 5 degrees around the robot.
         for angle_deg in range(-180, 181, 5):
             score = self.get_open_distance(scan, angle_deg, window_deg=10.0)
-
             if score is None:
                 continue
-
             if score > best_score:
                 best_score = score
                 best_angle = float(angle_deg)
 
         return best_angle, best_score
 
-    def rotate_by_angle(self, angle_deg, angular_speed=0.35):
+    def find_repeatable_heading(self, scan):
         """
-        Open-loop rotation using time.
+        Prefer the center of the largest open arc. Fall back to the farthest
+        smoothed direction if no arc crosses the threshold.
+        """
+        arc_angle, arc_width, arc_count = self.find_largest_opening_center_angle(scan)
 
-        Positive angle = turn left.
-        Negative angle = turn right.
-        """
+        if arc_angle is not None:
+            self.get_logger().info(
+                f"Largest open arc center={arc_angle:.1f} deg, "
+                f"width={arc_width:.1f} deg, points={arc_count}"
+            )
+            return arc_angle
+
+        far_angle, far_score = self.find_fallback_open_angle(scan)
+        self.get_logger().info(
+            f"Fallback farthest heading={far_angle:.1f} deg, score={far_score:.2f} m"
+        )
+        return far_angle
+
+    def rotate_by_angle(self, angle_deg, angular_speed=0.35):
         if abs(angle_deg) < 2.0:
             self.stop_robot()
             return
@@ -322,17 +407,9 @@ class CmdVelBagTool(Node):
 
         self.stop_robot()
         time.sleep(0.2)
+        self.refresh_scan(samples=2)
 
     def drive_distance(self, distance_m, linear_speed=0.08, safety_dist=0.28):
-        """
-        Open-loop forward/backward drive using time.
-
-        Positive distance = forward.
-        Negative distance = backward.
-
-        While moving, it watches the lidar sector in the direction of travel and
-        stops early if something is too close.
-        """
         if abs(distance_m) < 0.015:
             self.stop_robot()
             return
@@ -340,12 +417,9 @@ class CmdVelBagTool(Node):
         sign = 1.0 if distance_m > 0.0 else -1.0
         speed = sign * abs(linear_speed)
         duration = abs(distance_m) / abs(linear_speed)
-
         travel_angle = 0.0 if sign > 0.0 else 180.0
 
-        self.get_logger().info(
-            f"Driving {distance_m:.3f} m for {duration:.2f} sec"
-        )
+        self.get_logger().info(f"Driving {distance_m:.3f} m for {duration:.2f} sec")
 
         start = time.time()
         while rclpy.ok() and time.time() - start < duration:
@@ -355,7 +429,7 @@ class CmdVelBagTool(Node):
                 obstacle_dist = self.get_wall_distance(
                     self.latest_scan,
                     travel_angle,
-                    window_deg=18.0
+                    window_deg=18.0,
                 )
 
                 if obstacle_dist is not None and obstacle_dist < safety_dist:
@@ -369,19 +443,9 @@ class CmdVelBagTool(Node):
 
         self.stop_robot()
         time.sleep(0.2)
+        self.refresh_scan(samples=2)
 
     def move_sideways_by_rotation(self, lateral_offset_m):
-        """
-        Move sideways even though TurtleBot cannot strafe.
-
-        Positive offset = move left.
-        Negative offset = move right.
-
-        Implementation:
-        - turn 90 degrees toward the desired side
-        - drive forward
-        - turn back to original heading
-        """
         if abs(lateral_offset_m) < 0.015:
             return
 
@@ -398,40 +462,31 @@ class CmdVelBagTool(Node):
         """
         Try to place the robot in a repeatable starting pose using only lidar.
 
-        Strategy:
-        1. Wait for scan.
-        2. Face the farthest open direction.
-        3. Center left/right between side walls if both side walls are visible.
-        4. Center front/back if both front and back walls are visible.
-        5. Repeat centering a few times because each move changes the scan.
-        6. Face the farthest open direction again.
-
-        This works best when the robot starts inside a 2-wall or 3-wall region,
-        such as a maze starting box or corridor entrance.
+        Steps:
+        1. Face the center of the largest contiguous open arc.
+        2. Center left/right if both side walls are visible.
+        3. Center front/back if both front and back walls are visible.
+        4. Repeat centering a few times.
+        5. Face the center of the largest contiguous open arc again.
         """
-        if not self.wait_for_scan(timeout_sec=5.0):
+        if not self.refresh_scan(samples=5, timeout_sec=0.5):
+            self.get_logger().warn("No scan available for centering.")
             return False
 
         self.get_logger().info("Starting lidar-based centering routine.")
 
-        # Tunables
         max_single_correction_m = 0.35
         min_correction_m = 0.025
         side_wall_window_deg = 14.0
         front_back_window_deg = 14.0
         max_wall_for_centering_m = 2.50
 
-        # Step 1: face the farthest open direction first.
         scan = self.latest_scan
-        far_angle, far_score = self.find_farthest_open_angle(scan)
-        self.get_logger().info(
-            f"Initial farthest open direction: {far_angle:.1f} deg, score={far_score:.2f} m"
-        )
-        self.rotate_by_angle(far_angle)
+        initial_heading = self.find_repeatable_heading(scan)
+        self.rotate_by_angle(initial_heading)
 
-        # Step 2: iteratively center.
         for iteration in range(3):
-            if not self.wait_for_scan(timeout_sec=2.0):
+            if not self.refresh_scan(samples=3, timeout_sec=0.3):
                 return False
 
             scan = self.latest_scan
@@ -449,19 +504,16 @@ class CmdVelBagTool(Node):
 
             did_move = False
 
-            # Center between left and right walls if both are visible.
             if (
                 left is not None
                 and right is not None
                 and left < max_wall_for_centering_m
                 and right < max_wall_for_centering_m
             ):
-                # If left > right, robot is closer to right wall, so move left.
                 lateral_offset = 0.5 * (left - right)
-
                 lateral_offset = max(
                     -max_single_correction_m,
-                    min(max_single_correction_m, lateral_offset)
+                    min(max_single_correction_m, lateral_offset),
                 )
 
                 if abs(lateral_offset) > min_correction_m:
@@ -472,26 +524,23 @@ class CmdVelBagTool(Node):
                     self.move_sideways_by_rotation(lateral_offset)
                     did_move = True
 
-            # Re-scan after lateral motion before doing front/back correction.
-            rclpy.spin_once(self, timeout_sec=0.1)
-            scan = self.latest_scan
+            if not self.refresh_scan(samples=3, timeout_sec=0.3):
+                return False
 
+            scan = self.latest_scan
             front = self.get_wall_distance(scan, 0.0, front_back_window_deg)
             back = self.get_wall_distance(scan, 180.0, front_back_window_deg)
 
-            # Center between front and back walls if both are visible.
             if (
                 front is not None
                 and back is not None
                 and front < max_wall_for_centering_m
                 and back < max_wall_for_centering_m
             ):
-                # If front > back, robot is closer to back wall, so move forward.
                 forward_offset = 0.5 * (front - back)
-
                 forward_offset = max(
                     -max_single_correction_m,
-                    min(max_single_correction_m, forward_offset)
+                    min(max_single_correction_m, forward_offset),
                 )
 
                 if abs(forward_offset) > min_correction_m:
@@ -506,16 +555,12 @@ class CmdVelBagTool(Node):
                 self.get_logger().info("Centering corrections are below threshold.")
                 break
 
-        # Step 3: face the farthest open direction again after centering.
-        if not self.wait_for_scan(timeout_sec=2.0):
+        if not self.refresh_scan(samples=5, timeout_sec=0.5):
             return False
 
         scan = self.latest_scan
-        far_angle, far_score = self.find_farthest_open_angle(scan)
-        self.get_logger().info(
-            f"Final farthest open direction: {far_angle:.1f} deg, score={far_score:.2f} m"
-        )
-        self.rotate_by_angle(far_angle)
+        final_heading = self.find_repeatable_heading(scan)
+        self.rotate_by_angle(final_heading)
 
         self.stop_robot()
         self.get_logger().info("Centering routine complete.")
@@ -526,8 +571,11 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument(
         "mode",
-        choices=["record", "follow"],
-        help="record teleop cmd_vel into a bag, or follow a recorded bag",
+        choices=["center", "record", "follow"],
+        help=(
+            "center only, record teleop cmd_vel into a bag, "
+            "or follow a recorded bag"
+        ),
     )
     parser.add_argument(
         "--bag",
@@ -537,7 +585,7 @@ def main():
     parser.add_argument(
         "--namespace",
         default="/tb4_4",
-        help="namespace topic to record or publish",
+        help="Robot namespace. Example: /tb4_4. Use empty string for no namespace.",
     )
     parser.add_argument(
         "--rate-scale",
@@ -550,6 +598,21 @@ def main():
         action="store_true",
         help="Run lidar-based centering before record/follow.",
     )
+    parser.add_argument(
+        "--lidar-offset-deg",
+        type=float,
+        default=0.0,
+        help=(
+            "Angular offset between LaserScan frame and robot body frame. "
+            "Use -90 or 90 if front/left/right appear rotated."
+        ),
+    )
+    parser.add_argument(
+        "--open-threshold",
+        type=float,
+        default=1.0,
+        help="Range in meters used to classify scan points as part of an opening.",
+    )
 
     args = parser.parse_args()
 
@@ -557,37 +620,52 @@ def main():
         raise ValueError("--rate-scale must be greater than 0")
 
     rclpy.init()
-    node = CmdVelBagTool(
-        mode=args.mode,
-        bag_path=args.bag,
-        namespace=args.namespace,
-        rate_scale=args.rate_scale,
-        center_before_run=args.center,
-    )
+    node = None
 
     try:
-        rclpy.spin(node)
+        node = CmdVelBagTool(
+            mode=args.mode,
+            bag_path=args.bag,
+            namespace=args.namespace,
+            rate_scale=args.rate_scale,
+            center_before_run=args.center,
+            lidar_angle_offset_deg=args.lidar_offset_deg,
+            open_threshold_m=args.open_threshold,
+        )
+
+        if args.mode in ["record", "follow"]:
+            rclpy.spin(node)
+
     except KeyboardInterrupt:
-        if args.mode == "follow":
+        if node is not None:
             node.publish_stop()
     finally:
-        node.destroy_node()
+        if node is not None:
+            node.publish_stop()
+            node.destroy_node()
 
         if rclpy.ok():
             rclpy.shutdown()
 
+
 if __name__ == "__main__":
     main()
 
-'''record mode: ros2 run final-comp bag_cmd_vel_player record \
-  --bag my_teleop_run \
-  --namespace /tb4_4
+"""
+Examples:
 
-  follow mode: ros2 run final-comp bag_cmd_vel_player follow \
-  --bag my_teleop_run \
-  --namespace /tb4_4
+Center only:
+ros2 run final-comp bag_cmd_vel_player center --namespace /tb4_4
 
-  faster playback: ros2 run final-comp bag_cmd_vel_player follow \
-  --bag my_teleop_run \
-  --namespace /tb4_4 \
-  --rate-scale 1.5'''
+Center only if the scan frame appears rotated:
+ros2 run final-comp bag_cmd_vel_player center --namespace /tb4_4 --lidar-offset-deg -90
+
+Record with centering first:
+ros2 run final-comp bag_cmd_vel_player record --bag my_teleop_run --namespace /tb4_4 --center
+
+Follow with centering first:
+ros2 run final-comp bag_cmd_vel_player follow --bag my_teleop_run --namespace /tb4_4 --center
+
+Faster playback:
+ros2 run final-comp bag_cmd_vel_player follow --bag my_teleop_run --namespace /tb4_4 --rate-scale 1.5
+"""
