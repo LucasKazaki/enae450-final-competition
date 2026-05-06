@@ -194,7 +194,7 @@ class CmdVelBagTool(Node):
         start = time.time()
 
         while rclpy.ok() and self.latest_scan is None:
-            rclpy.spin_once(self, timeout_sec=0.05)
+            rclpy.spin_once(self, timeout_sec=5.0)
             if time.time() - start > timeout_sec:
                 self.get_logger().warn("Timed out waiting for LaserScan.")
                 return False
@@ -469,17 +469,17 @@ class CmdVelBagTool(Node):
         4. Repeat centering a few times.
         5. Face the center of the largest contiguous open arc again.
         """
-        if not self.refresh_scan(samples=5, timeout_sec=0.5):
+        if not self.refresh_scan(samples=5, timeout_sec=5.0):
             self.get_logger().warn("No scan available for centering.")
             return False
 
         self.get_logger().info("Starting lidar-based centering routine.")
 
         max_single_correction_m = 0.35
-        min_correction_m = 0.025
-        side_wall_window_deg = 14.0
-        front_back_window_deg = 14.0
-        max_wall_for_centering_m = 2.50
+        min_correction_m = 0.05
+        side_wall_window_deg = 30.0
+        front_back_window_deg = 30.0
+        max_wall_for_centering_m = 1.0
 
         scan = self.latest_scan
         initial_heading = self.find_repeatable_heading(scan)
@@ -584,7 +584,7 @@ def main():
     )
     parser.add_argument(
         "--namespace",
-        default="/tb4_4",
+        default="/tb4_6",
         help="Robot namespace. Example: /tb4_4. Use empty string for no namespace.",
     )
     parser.add_argument(
@@ -595,13 +595,14 @@ def main():
     )
     parser.add_argument(
         "--center",
-        action="store_true",
+        action="store_false",
+        default=True,
         help="Run lidar-based centering before record/follow.",
     )
     parser.add_argument(
         "--lidar-offset-deg",
         type=float,
-        default=0.0,
+        default=-90.0,
         help=(
             "Angular offset between LaserScan frame and robot body frame. "
             "Use -90 or 90 if front/left/right appear rotated."
@@ -633,7 +634,7 @@ def main():
             open_threshold_m=args.open_threshold,
         )
 
-        if args.mode in ["record", "follow"]:
+        if args.mode in ["record", "follow", "center"]:
             rclpy.spin(node)
 
     except KeyboardInterrupt:

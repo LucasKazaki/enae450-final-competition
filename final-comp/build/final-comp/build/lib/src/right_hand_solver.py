@@ -12,7 +12,6 @@ class RightHandWallFollower(Node):
     def __init__(self):
         super().__init__("right_hand_wall_follower")
 
-        # Change these if your simulator uses namespaced topics like /tb4_3/scan
         self.scan_topic = self.declare_parameter("scan_topic", "scan").value
         self.cmd_topic = self.declare_parameter("cmd_topic", "cmd_vel").value
 
@@ -35,12 +34,13 @@ class RightHandWallFollower(Node):
 
         # Tunable parameters
         self.target_right_dist = float(0.5)   # meters from right wall
-        self.too_close_right = float(0.3)
-        self.front_blocked_dist = float(0.3)
+        self.too_close_right = float(0.4)
+        self.front_blocked_dist = float(0.4)
         self.open_space_dist = float(1.0)
 
-        self.forward_speed = float(0.1)
+        self.forward_speed = float(0.3)
         self.turn_speed = float(0.5)
+
 
         self.get_logger().info("Right hand wall follower started.")
         self.get_logger().info(f"Subscribing to {self.scan_topic}, publishing to {self.cmd_topic}")
@@ -65,7 +65,7 @@ class RightHandWallFollower(Node):
         for i, r in enumerate(scan.ranges):
             angle = scan.angle_min + i * scan.angle_increment
             angle_diff = (angle - angle_rad + math.pi) % (2 * math.pi) - math.pi
-    
+   
             # if abs(angle_diff) <= window_rad:
             if abs(angle - angle_rad) <= window_rad:
                     if math.isfinite(r) and scan.range_min < r < scan.range_max:
@@ -94,7 +94,7 @@ class RightHandWallFollower(Node):
         for i, r in enumerate(scan.ranges):
             angle = scan.angle_min + i * scan.angle_increment
             angle_diff = (angle - angle_rad + math.pi) % (2 * math.pi) - math.pi
-    
+   
             # print("angle_diff:" + str(angle-angle_rad) + "; window_rad:" + str(window_rad))
             # if abs(angle_diff) <= window_rad:
             if abs(angle - angle_rad) <= window_rad:
@@ -132,7 +132,7 @@ class RightHandWallFollower(Node):
 
         front_clear = front > self.front_blocked_dist
         right_wall = right < self.open_space_dist
-        
+       
         """
         # spin-in-place testing
         # left turn is positive angular.z
@@ -142,27 +142,33 @@ class RightHandWallFollower(Node):
         self.cmd_pub.publish(cmd)
         return
         """
-        
+       
         #check if out of maze first
-        if ((self.get_range_at_angle(scan, 0, 60) > self.open_space_dist) or (right_wall and (self.get_range_at_angle(90, 45) > 1.0))):
+        if self.get_range_at_angle(scan, 0, 80) > self.open_space_dist:
             print(self.get_range_at_angle(scan, 0, 80))
             print("\n|||***open space on all sides, likely out of maze***|||")
             print("- doing 180 and stopping")
             # do a 180 and stop
             # state = "open space on all sides, likely out of maze, doing 180 and stopping"
-            
-            cmd.twist.linear.x = 1.0
+            cmd.twist.linear.x = 0.75
+            cmd.twist.angular.z = 0.0
+            cmd.header.stamp = self.get_clock().now().to_msg()
+            cmd.header.frame_id = "base_footprint"
             self.cmd_pub.publish(cmd)
             time.sleep(0.5)
             cmd.twist.linear.x = 0.0
-            cmd.twist.angular.z = math.pi
+            cmd.twist.angular.z = self.turn_speed
+            cmd.header.stamp = self.get_clock().now().to_msg()
+            cmd.header.frame_id = "base_footprint"
             self.cmd_pub.publish(cmd)
-            print("b")
-            time.sleep(1 * math.pi)
+            time.sleep(self.turn_speed * math.pi)
             cmd.twist.angular.z = 0.0
+            cmd.header.stamp = self.get_clock().now().to_msg()
+            cmd.header.frame_id = "base_footprint"
+            cmd.twist.linear.x = 0.0
             self.cmd_pub.publish(cmd)
             quit()
-        
+       
         elif front_clear and right_wall:
             # Normal case: follow the right wall forward.
             print("\n***front clear and right wall exists***")
@@ -175,13 +181,13 @@ class RightHandWallFollower(Node):
                     print("- right wall WAY too close, steering left")
                     cmd.twist.linear.x = self.forward_speed * 0.01
                     cmd.twist.angular.z = self.turn_speed * 0.1
-                else: 
-                    print("- right wall too close, steering left") 
+                else:
+                    print("- right wall too close, steering left")
                     cmd.twist.angular.z = self.turn_speed * 0.5
                 """
-                print("- right wall too close, steering left") 
+                print("- right wall too close, steering left")
                 cmd.twist.angular.z = self.turn_speed * 0.2
-                    
+                   
             elif right > self.target_right_dist:
                 cmd.twist.angular.z = -self.turn_speed
                 print("- right wall too far, steering right")
@@ -205,7 +211,7 @@ class RightHandWallFollower(Node):
             print("- turning left")
 
         state = "ignore, look to print statements instead"
-        
+       
         self.cmd_pub.publish(cmd)
 
         self.get_logger().info(
@@ -235,6 +241,6 @@ def main(args=None):
 if __name__ == "__main__":
     main()
 
-'''python3 right_hand_solver.py --ros-args \
+'''ros2 run final-comp right_hand_solver --ros-args \
   -p scan_topic:=/tb4_3/scan \
   -p cmd_topic:=/tb4_3/cmd_vel'''

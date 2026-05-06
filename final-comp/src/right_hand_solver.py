@@ -151,13 +151,21 @@ class RightHandWallFollower(Node):
             # do a 180 and stop
             # state = "open space on all sides, likely out of maze, doing 180 and stopping"
             cmd.twist.linear.x = 0.75
+            cmd.twist.angular.z = 0.0
+            cmd.header.stamp = self.get_clock().now().to_msg()
+            cmd.header.frame_id = "base_footprint"
             self.cmd_pub.publish(cmd)
             time.sleep(0.5)
             cmd.twist.linear.x = 0.0
             cmd.twist.angular.z = self.turn_speed
+            cmd.header.stamp = self.get_clock().now().to_msg()
+            cmd.header.frame_id = "base_footprint"
             self.cmd_pub.publish(cmd)
             time.sleep(self.turn_speed * math.pi)
             cmd.twist.angular.z = 0.0
+            cmd.header.stamp = self.get_clock().now().to_msg()
+            cmd.header.frame_id = "base_footprint"
+            cmd.twist.linear.x = 0.0
             self.cmd_pub.publish(cmd)
             quit()
        
@@ -233,6 +241,6 @@ def main(args=None):
 if __name__ == "__main__":
     main()
 
-'''python3 right_hand_solver.py --ros-args \
+'''ros2 run final-comp right_hand_solver --ros-args \
   -p scan_topic:=/tb4_3/scan \
   -p cmd_topic:=/tb4_3/cmd_vel'''
