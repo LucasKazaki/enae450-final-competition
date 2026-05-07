@@ -1,0 +1,102 @@
+[0.000000] (-) TimerEvent: {}
+[0.000455] (final-comp) JobQueued: {'identifier': 'final-comp', 'dependencies': OrderedDict()}
+[0.000533] (final-comp) JobStarted: {'identifier': 'final-comp'}
+[0.085036] (-) TimerEvent: {}
+[0.185734] (-) TimerEvent: {}
+[0.289592] (-) TimerEvent: {}
+[0.390147] (-) TimerEvent: {}
+[0.494301] (-) TimerEvent: {}
+[0.595627] (-) TimerEvent: {}
+[0.698635] (-) TimerEvent: {}
+[0.800266] (-) TimerEvent: {}
+[0.902498] (-) TimerEvent: {}
+[1.006699] (-) TimerEvent: {}
+[1.111337] (-) TimerEvent: {}
+[1.213666] (-) TimerEvent: {}
+[1.315118] (-) TimerEvent: {}
+[1.416839] (-) TimerEvent: {}
+[1.521850] (-) TimerEvent: {}
+[1.622800] (-) TimerEvent: {}
+[1.723544] (-) TimerEvent: {}
+[1.824277] (-) TimerEvent: {}
+[1.924976] (-) TimerEvent: {}
+[2.025647] (-) TimerEvent: {}
+[2.126505] (-) TimerEvent: {}
+[2.227009] (-) TimerEvent: {}
+[2.327622] (-) TimerEvent: {}
+[2.429359] (-) TimerEvent: {}
+[2.529955] (-) TimerEvent: {}
+[2.630608] (-) TimerEvent: {}
+[2.736732] (-) TimerEvent: {}
+[2.837392] (-) TimerEvent: {}
+[2.945798] (-) TimerEvent: {}
+[3.046388] (-) TimerEvent: {}
+[3.147156] (-) TimerEvent: {}
+[3.253284] (-) TimerEvent: {}
+[3.353563] (final-comp) Command: {'cmd': ['/usr/bin/python3', '-W', 'ignore:setup.py install is deprecated', '-W', 'ignore:easy_install command is deprecated', 'setup.py', 'egg_info', '--egg-base', 'build/final-comp', 'build', '--build-base', '/home/kazaki/enae450-s26/final competition/enae450-final-competition/final-comp/build/final-comp/build', 'install', '--record', '/home/kazaki/enae450-s26/final competition/enae450-final-competition/final-comp/build/final-comp/install.log', '--single-version-externally-managed', 'install_data'], 'cwd': '/home/kazaki/enae450-s26/final competition/enae450-final-competition/final-comp', 'env': {'PYTHON_BASIC_REPL': '1', 'LESSOPEN': '| /usr/bin/lesspipe %s', 'GZ_SIM_RESOURCE_PATH': '/opt/ros/jazzy/share', 'USER': 'kazaki', 'GZ_CONFIG_PATH': '/opt/ros/jazzy/opt/gz_sim_vendor/share/gz:/opt/ros/jazzy/opt/sdformat_vendor/share/gz:/opt/ros/jazzy/opt/gz_gui_vendor/share/gz:/opt/ros/jazzy/opt/gz_transport_vendor/share/gz:/opt/ros/jazzy/opt/gz_rendering_vendor/share/gz:/opt/ros/jazzy/opt/gz_plugin_vendor/share/gz:/opt/ros/jazzy/opt/gz_fuel_tools_vendor/share/gz:/opt/ros/jazzy/opt/gz_msgs_vendor/share/gz:/opt/ros/jazzy/opt/gz_common_vendor/share/gz', 'GIT_ASKPASS': '/home/kazaki/.vscode-server/bin/f220831ea2d946c0dcb0f3eaa480eb435a2c1260/extensions/git/dist/askpass.sh', 'SHLVL': '1', 'LD_LIBRARY_PATH': '/opt/ros/jazzy/opt/gz_sim_vendor/lib:/opt/ros/jazzy/opt/gz_sensors_vendor/lib:/opt/ros/jazzy/opt/gz_physics_vendor/lib:/opt/ros/jazzy/opt/sdformat_vendor/lib:/opt/ros/jazzy/opt/rviz_ogre_vendor/lib:/opt/ros/jazzy/lib/x86_64-linux-gnu:/opt/ros/jazzy/opt/gz_gui_vendor/lib:/opt/ros/jazzy/opt/gz_transport_vendor/lib:/opt/ros/jazzy/opt/gz_rendering_vendor/lib:/opt/ros/jazzy/opt/gz_plugin_vendor/lib:/opt/ros/jazzy/opt/gz_fuel_tools_vendor/lib:/opt/ros/jazzy/opt/gz_msgs_vendor/lib:/opt/ros/jazzy/opt/gz_common_vendor/lib:/opt/ros/jazzy/opt/gz_math_vendor/lib:/opt/ros/jazzy/opt/gz_utils_vendor/lib:/opt/ros/jazzy/opt/gz_tools_vendor/lib:/opt/ros/jazzy/opt/gz_ogre_next_vendor/lib:/opt/ros/jazzy/opt/gz_dartsim_vendor/lib:/opt/ros/jazzy/opt/gz_cmake_vendor/lib:/opt/ros/jazzy/lib', 'HOME': '/home/kazaki', 'OLDPWD': '/home/kazaki', 'CAML_LD_LIBRARY_PATH': '/home/kazaki/.opam/5.2.0/lib/stublibs:/home/kazaki/.opam/5.2.0/lib/ocaml/stublibs:/home/kazaki/.opam/5.2.0/lib/ocaml', 'TERM_PROGRAM_VERSION': '1.104.0', 'VSCODE_IPC_HOOK_CLI': '/run/user/1000/vscode-ipc-c4d83925-31e6-46a4-bf11-cbfd1f735308.sock', 'OCAML_TOPLEVEL_PATH': '/home/kazaki/.opam/5.2.0/lib/toplevel', 'ROS_PYTHON_VERSION': '3', 'VSCODE_GIT_ASKPASS_MAIN': '/home/kazaki/.vscode-server/bin/f220831ea2d946c0dcb0f3eaa480eb435a2c1260/extensions/git/dist/askpass-main.js', 'VSCODE_GIT_ASKPASS_NODE': '/home/kazaki/.vscode-server/bin/f220831ea2d946c0dcb0f3eaa480eb435a2c1260/node', 'PYDEVD_DISABLE_FILE_VALIDATION': '1', 'BUNDLED_DEBUGPY_PATH': '/home/kazaki/.vscode-server/extensions/ms-python.debugpy-2026.6.0-linux-x64/bundled/libs/debugpy', 'DBUS_SESSION_BUS_ADDRESS': 'unix:path=/run/user/1000/bus', 'COLORTERM': 'truecolor', 'WSL_DISTRO_NAME': 'Ubuntu', 'WAYLAND_DISPLAY': 'wayland-0', 'ROS_DISTRO': 'jazzy', 'LOGNAME': 'kazaki', 'NAME': 'LAPTOP-KOKBBCDV', 'WSL_INTEROP': '/run/WSL/961_interop', 'IGN_GAZEBO_MODEL_PATH': '/opt/ros/jazzy/share', 'PULSE_SERVER': 'unix:/mnt/wslg/PulseServer', '_': '/usr/bin/colcon', 'ROS_VERSION': '2', 'ROS_SUPER_CLIENT': 'True', 'TERM': 'xterm-256color', 'GAZEBO_MODEL_PATH': '/opt/ros/jazzy/share', 'PATH': '/opt/ros/jazzy/opt/gz_msgs_vendor/bin:/opt/ros/jazzy/opt/gz_tools_vendor/bin:/opt/ros/jazzy/opt/gz_ogre_next_vendor/bin:/opt/ros/jazzy/bin:/home/kazaki/.cargo/bin:/home/kazaki/.cargo/bin:/home/kazaki/.opam/5.2.0/bin:/home/kazaki/.vscode-server/bin/f220831ea2d946c0dcb0f3eaa480eb435a2c1260/bin/remote-cli:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/lib/wsl/lib:/mnt/c/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v12.2/bin:/mnt/c/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v12.2/libnvvp:/mnt/c/Python310/Scripts/:/mnt/c/Python310/:/mnt/c/Program Files (x86)/Common Files/Intel/Shared Libraries/redist/intel64/compiler:/mnt/c/Program Files/Common Files/Oracle/Java/javapath:/mnt/c/Program Files (x86)/Common Files/Oracle/Java/javapath:/mnt/c/Windows/system32:/mnt/c/Windows:/mnt/c/Windows/System32/Wbem:/mnt/c/Windows/System32/WindowsPowerShell/v1.0/:/mnt/c/Windows/System32/OpenSSH/:/mnt/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common:/mnt/c/Program Files/Git/cmd:/mnt/c/Program Files/nodejs/:/mnt/c/ProgramData/chocolatey/bin:/mnt/c/Program Files/dotnet/:/mnt/c/User/taof/AppData/Local/Programs/Python/Python39/Scripts:/mnt/c/Users/taof/Downloads/opencv/build/bin/Release:/mnt/c/Users/taof/Downloads/opencv/build/bin/Debug:/mnt/c/Program Files/NVIDIA Corporation/Nsight Compute 2023.2.1/:/mnt/c/Program Files/NVIDIA Corporation/NVIDIA app/NvDLISR:/mnt/c/WINDOWS/system32:/mnt/c/WINDOWS:/mnt/c/WINDOWS/System32/Wbem:/mnt/c/WINDOWS/System32/WindowsPowerShell/v1.0/:/mnt/c/WINDOWS/System32/OpenSSH/:/mnt/c/Program Files (x86)/Windows Kits/10/Windows Performance Toolkit/:/mnt/c/Users/taof/.cargo/bin:/mnt/c/Users/taof/AppData/Local/Microsoft/WindowsApps:/mnt/c/Users/taof/AppData/Local/Programs/Microsoft VS Code/bin:/mnt/c/Users/taof/AppData/Local/GitHubDesktop/bin:/mnt/c/Users/taof/AppData/Roaming/npm:/mnt/c/Users/taof/.dotnet/tools:/mnt/c/msys64/mingw64/bin:/mnt/c/Users/taof/Downloads/opencv/build/lib/Release:/mnt/c/Users/taof/Downloads/opencv/build/lib/Debug:/mnt/c/Program Files/JetBrains/PyCharm 2025.1.3.1/bin:/home/kazaki/.vscode-server/extensions/ms-python.debugpy-2026.6.0-linux-x64/bundled/scripts/noConfigScripts:/home/kazaki/.vscode-server/data/User/globalStorage/github.copilot-chat/debugCommand', 'XDG_RUNTIME_DIR': '/run/user/1000/', 'DISPLAY': ':0', 'VSCODE_DEBUGPY_ADAPTER_ENDPOINTS': '/home/kazaki/.vscode-server/extensions/ms-python.debugpy-2026.6.0-linux-x64/.noConfigDebugAdapterEndpoints/endpoint-628139d13078bbe2.txt', 'VSCODE_INJECTION': '1', 'LANG': 'en_US.UTF-8', 'PYTHONSTARTUP': '/home/kazaki/.vscode-server/data/User/workspaceStorage/28f0f1e3b93fab3d6dee2f818f393198/ms-python.python/pythonrc.py', 'RMW_IMPLEMENTATION': 'rmw_fastrtps_cpp', 'LS_COLORS': 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=00:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.avif=01;35:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:*~=00;90:*#=00;90:*.bak=00;90:*.crdownload=00;90:*.dpkg-dist=00;90:*.dpkg-new=00;90:*.dpkg-old=00;90:*.dpkg-tmp=00;90:*.old=00;90:*.orig=00;90:*.part=00;90:*.rej=00;90:*.rpmnew=00;90:*.rpmorig=00;90:*.rpmsave=00;90:*.swp=00;90:*.tmp=00;90:*.ucf-dist=00;90:*.ucf-new=00;90:*.ucf-old=00;90:', 'VSCODE_GIT_IPC_HANDLE': '/run/user/1000/vscode-git-400c53cda3.sock', 'TERM_PROGRAM': 'vscode', 'ROS_DOMAIN_ID': '0', 'AMENT_PREFIX_PATH': '/opt/ros/jazzy', 'VSCODE_STABLE': '1', 'SHELL': '/bin/bash', 'ROS_DISCOVERY_SERVER': ';;;;;192.168.50.66:11811;', 'FASTDDS_DEFAULT_PROFILES_FILE': '/home/kazaki/super_client.xml', 'LESSCLOSE': '/usr/bin/lesspipe %s %s', 'IGN_GAZEBO_RESOURCE_PATH': '/opt/ros/jazzy/share', 'OCAMLTOP_INCLUDE_PATH': '/home/kazaki/.opam/5.2.0/lib/toplevel', 'OPAM_SWITCH_PREFIX': '/home/kazaki/.opam/5.2.0', 'GAZEBO_RESOURCE_PATH': '/opt/ros/jazzy/share', 'ROS_AUTOMATIC_DISCOVERY_RANGE': 'SUBNET', 'VSCODE_GIT_ASKPASS_EXTRA_ARGS': '', 'VSCODE_NONCE': '1e0d8544-8459-42a6-9f02-d9439d5c78bb', 'PWD': '/home/kazaki/enae450-s26/final competition/enae450-final-competition/final-comp/build/final-comp', 'OPAM_LAST_ENV': '/home/kazaki/.opam/.last-env/env-de32d86b125417e751939ce2c58b1149-0', 'PYTHONPATH': '/home/kazaki/enae450-s26/final competition/enae450-final-competition/final-comp/build/final-comp/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/kazaki/enae450-s26/final competition/enae450-final-competition/final-comp/install/final-comp/lib/python3.12/site-packages:/opt/ros/jazzy/lib/python3.12/site-packages', 'COLCON': '1', 'WSL2_GUI_APPS_ENABLED': '1', 'MANPATH': ':/home/kazaki/.opam/5.2.0/man', 'HOSTTYPE': 'x86_64', 'CMAKE_PREFIX_PATH': '/opt/ros/jazzy/opt/gz_sim_vendor:/opt/ros/jazzy/opt/gz_sensors_vendor:/opt/ros/jazzy/opt/gz_physics_vendor:/opt/ros/jazzy/opt/sdformat_vendor:/opt/ros/jazzy/opt/gz_gui_vendor:/opt/ros/jazzy/opt/gz_transport_vendor:/opt/ros/jazzy/opt/gz_rendering_vendor:/opt/ros/jazzy/opt/gz_plugin_vendor:/opt/ros/jazzy/opt/gz_fuel_tools_vendor:/opt/ros/jazzy/opt/gz_msgs_vendor:/opt/ros/jazzy/opt/gz_common_vendor:/opt/ros/jazzy/opt/gz_math_vendor:/opt/ros/jazzy/opt/gz_utils_vendor:/opt/ros/jazzy/opt/gz_tools_vendor:/opt/ros/jazzy/opt/gz_ogre_next_vendor:/opt/ros/jazzy/opt/gz_dartsim_vendor:/opt/ros/jazzy/opt/gz_cmake_vendor', 'WSLENV': 'VSCODE_WSL_EXT_LOCATION/up'}, 'shell': False}
+[3.360193] (-) TimerEvent: {}
+[3.462662] (-) TimerEvent: {}
+[3.563172] (-) TimerEvent: {}
+[3.664491] (-) TimerEvent: {}
+[3.765101] (-) TimerEvent: {}
+[3.865707] (-) TimerEvent: {}
+[3.968056] (-) TimerEvent: {}
+[4.080330] (-) TimerEvent: {}
+[4.180942] (-) TimerEvent: {}
+[4.289296] (-) TimerEvent: {}
+[4.389979] (-) TimerEvent: {}
+[4.490522] (-) TimerEvent: {}
+[4.591162] (-) TimerEvent: {}
+[4.703994] (-) TimerEvent: {}
+[4.804560] (-) TimerEvent: {}
+[4.896872] (final-comp) StdoutLine: {'line': b'running egg_info\n'}
+[4.904781] (-) TimerEvent: {}
+[4.999393] (final-comp) StdoutLine: {'line': b'writing build/final-comp/final_comp.egg-info/PKG-INFO\n'}
+[5.000063] (final-comp) StdoutLine: {'line': b'writing dependency_links to build/final-comp/final_comp.egg-info/dependency_links.txt\n'}
+[5.000261] (final-comp) StdoutLine: {'line': b'writing entry points to build/final-comp/final_comp.egg-info/entry_points.txt\n'}
+[5.000433] (final-comp) StdoutLine: {'line': b'writing requirements to build/final-comp/final_comp.egg-info/requires.txt\n'}
+[5.000601] (final-comp) StdoutLine: {'line': b'writing top-level names to build/final-comp/final_comp.egg-info/top_level.txt\n'}
+[5.004976] (-) TimerEvent: {}
+[5.105562] (-) TimerEvent: {}
+[5.206092] (-) TimerEvent: {}
+[5.251119] (final-comp) StdoutLine: {'line': b"reading manifest file 'build/final-comp/final_comp.egg-info/SOURCES.txt'\n"}
+[5.254933] (final-comp) StdoutLine: {'line': b"writing manifest file 'build/final-comp/final_comp.egg-info/SOURCES.txt'\n"}
+[5.255476] (final-comp) StdoutLine: {'line': b'running build\n'}
+[5.257064] (final-comp) StdoutLine: {'line': b'running build_py\n'}
+[5.271570] (final-comp) StdoutLine: {'line': b'running install\n'}
+[5.306243] (-) TimerEvent: {}
+[5.322888] (final-comp) StdoutLine: {'line': b'running install_lib\n'}
+[5.406560] (-) TimerEvent: {}
+[5.427112] (final-comp) StdoutLine: {'line': b'running install_data\n'}
+[5.427772] (final-comp) StdoutLine: {'line': b'running install_egg_info\n'}
+[5.506823] (-) TimerEvent: {}
+[5.560767] (final-comp) StdoutLine: {'line': b"removing '/home/kazaki/enae450-s26/final competition/enae450-final-competition/final-comp/install/final-comp/lib/python3.12/site-packages/final_comp-0.0.0-py3.12.egg-info' (and everything under it)\n"}
+[5.569145] (final-comp) StdoutLine: {'line': b'Copying build/final-comp/final_comp.egg-info to /home/kazaki/enae450-s26/final competition/enae450-final-competition/final-comp/install/final-comp/lib/python3.12/site-packages/final_comp-0.0.0-py3.12.egg-info\n'}
+[5.571977] (final-comp) StdoutLine: {'line': b'running install_scripts\n'}
+[5.607071] (-) TimerEvent: {}
+[5.707771] (-) TimerEvent: {}
+[5.808349] (-) TimerEvent: {}
+[5.919525] (-) TimerEvent: {}
+[6.027318] (-) TimerEvent: {}
+[6.128100] (-) TimerEvent: {}
+[6.228757] (-) TimerEvent: {}
+[6.329299] (-) TimerEvent: {}
+[6.429852] (-) TimerEvent: {}
+[6.530924] (-) TimerEvent: {}
+[6.614331] (final-comp) StdoutLine: {'line': b'Installing bag_cmd_vel_player script to /home/kazaki/enae450-s26/final competition/enae450-final-competition/final-comp/install/final-comp/lib/final-comp\n'}
+[6.615092] (final-comp) StdoutLine: {'line': b'Installing maze_solver script to /home/kazaki/enae450-s26/final competition/enae450-final-competition/final-comp/install/final-comp/lib/final-comp\n'}
+[6.615335] (final-comp) StdoutLine: {'line': b'Installing move_robot script to /home/kazaki/enae450-s26/final competition/enae450-final-competition/final-comp/install/final-comp/lib/final-comp\n'}
+[6.615673] (final-comp) StdoutLine: {'line': b'Installing right_hand_solver script to /home/kazaki/enae450-s26/final competition/enae450-final-competition/final-comp/install/final-comp/lib/final-comp\n'}
+[6.618793] (final-comp) StdoutLine: {'line': b'Installing slam_auto_viewer script to /home/kazaki/enae450-s26/final competition/enae450-final-competition/final-comp/install/final-comp/lib/final-comp\n'}
+[6.619263] (final-comp) StdoutLine: {'line': b'Installing slam_launch script to /home/kazaki/enae450-s26/final competition/enae450-final-competition/final-comp/install/final-comp/lib/final-comp\n'}
+[6.619771] (final-comp) StdoutLine: {'line': b'Installing slam_map_viewer script to /home/kazaki/enae450-s26/final competition/enae450-final-competition/final-comp/install/final-comp/lib/final-comp\n'}
+[6.619999] (final-comp) StdoutLine: {'line': b'Installing teleop script to /home/kazaki/enae450-s26/final competition/enae450-final-competition/final-comp/install/final-comp/lib/final-comp\n'}
+[6.620304] (final-comp) StdoutLine: {'line': b'Installing view_map script to /home/kazaki/enae450-s26/final competition/enae450-final-competition/final-comp/install/final-comp/lib/final-comp\n'}
+[6.620613] (final-comp) StdoutLine: {'line': b"writing list of installed files to '/home/kazaki/enae450-s26/final competition/enae450-final-competition/final-comp/build/final-comp/install.log'\n"}
+[6.631223] (-) TimerEvent: {}
+[6.732324] (-) TimerEvent: {}
+[6.833126] (-) TimerEvent: {}
+[6.862319] (final-comp) CommandEnded: {'returncode': 0}
+[6.950691] (-) TimerEvent: {}
+[6.957809] (final-comp) JobEnded: {'identifier': 'final-comp', 'rc': 0}
+[6.959160] (-) EventReactorShutdown: {}

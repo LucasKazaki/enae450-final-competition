@@ -15,6 +15,8 @@ src/bag_cmd_vel_player.py
 src/draw_to_tb4_gazebo_world.py
 src/draw_to_tb4_gazebo_world_compressed.py
 src/maze_solver.py
+src/metric_c_bag_recorder.py
+src/metric_c_plotter.py
 src/move_robot.py
 src/premapped_recorder.py
 src/premapped_solver.py

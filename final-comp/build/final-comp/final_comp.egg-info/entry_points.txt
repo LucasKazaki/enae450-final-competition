@@ -1,6 +1,8 @@
 [console_scripts]
 bag_cmd_vel_player = src.bag_cmd_vel_player:main
 maze_solver = src.maze_solver:main
+metric_c_bag_recorder = src.metric_c_bag_recorder:main
+metric_c_plotter = src.metric_c_plotter:main
 move_robot = src.move_robot:main
 right_hand_solver = src.right_hand_solver:main
 slam_auto_viewer = src.slam_auto_viewer:main

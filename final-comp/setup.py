@@ -36,6 +36,8 @@ setup(
             'slam_auto_viewer = src.slam_auto_viewer:main',
             'bag_cmd_vel_player = src.bag_cmd_vel_player:main',
             'teleop = src.teleop:main',
+            "metric_c_bag_recorder = src.metric_c_bag_recorder:main",
+            "metric_c_plotter = src.metric_c_plotter:main",
         ],
     },
 )

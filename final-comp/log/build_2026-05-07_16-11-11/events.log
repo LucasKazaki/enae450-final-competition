@@ -1,0 +1,5 @@
+[0.000000] (-) TimerEvent: {}
+[0.000621] (final-comp) JobQueued: {'identifier': 'final-comp', 'dependencies': OrderedDict()}
+[0.000695] (final-comp) JobStarted: {'identifier': 'final-comp'}
+[0.058040] (final-comp) JobEnded: {'identifier': 'final-comp', 'rc': 1}
+[0.071055] (-) EventReactorShutdown: {}

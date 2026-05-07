@@ -1,0 +1,91 @@
+[1.002s] DEBUG:colcon:Command line arguments: ['/usr/bin/colcon', 'build']
+[1.011s] DEBUG:colcon:Parsed command line arguments: Namespace(log_base=None, log_level=None, verb_name='build', build_base='build', install_base='install', merge_install=False, symlink_install=False, test_result_base=None, continue_on_error=False, executor='parallel', parallel_workers=16, event_handlers=None, ignore_user_meta=False, metas=['./colcon.meta'], base_paths=['.'], packages_ignore=None, packages_ignore_regex=None, paths=None, packages_up_to=None, packages_up_to_regex=None, packages_above=None, packages_above_and_dependencies=None, packages_above_depth=None, packages_select_by_dep=None, packages_skip_by_dep=None, packages_skip_up_to=None, packages_select_build_failed=False, packages_skip_build_finished=False, packages_select_test_failures=False, packages_skip_test_passed=False, packages_select=None, packages_skip=None, packages_select_regex=None, packages_skip_regex=None, packages_start=None, packages_end=None, allow_overriding=[], cmake_args=None, cmake_target=None, cmake_target_skip_unavailable=False, cmake_clean_cache=False, cmake_clean_first=False, cmake_force_configure=False, ament_cmake_args=None, catkin_cmake_args=None, catkin_skip_building_tests=False, mixin_files=None, mixin=None, verb_parser=<colcon_mixin.mixin.mixin_argument.MixinArgumentDecorator object at 0x7cca04695df0>, verb_extension=<colcon_core.verb.build.BuildVerb object at 0x7cca054bbe00>, main=<bound method BuildVerb.main of <colcon_core.verb.build.BuildVerb object at 0x7cca054bbe00>>, mixin_verb=('build',))
+[1.292s] Level 1:colcon.colcon_core.package_discovery:discover_packages(colcon_meta) check parameters
+[1.292s] Level 1:colcon.colcon_core.package_discovery:discover_packages(recursive) check parameters
+[1.293s] Level 1:colcon.colcon_core.package_discovery:discover_packages(ignore) check parameters
+[1.293s] Level 1:colcon.colcon_core.package_discovery:discover_packages(path) check parameters
+[1.293s] Level 1:colcon.colcon_core.package_discovery:discover_packages(colcon_meta) discover
+[1.294s] Level 1:colcon.colcon_core.package_discovery:discover_packages(recursive) discover
+[1.294s] INFO:colcon.colcon_core.package_discovery:Crawling recursively for packages in '/home/kazaki/enae450-s26/final competition/enae450-final-competition/final-comp'
+[1.294s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['ignore', 'ignore_ament_install']
+[1.294s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'ignore'
+[1.294s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'ignore_ament_install'
+[1.295s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['colcon_pkg']
+[1.295s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'colcon_pkg'
+[1.295s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['colcon_meta']
+[1.295s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'colcon_meta'
+[1.295s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['ros']
+[1.295s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'ros'
+[1.506s] DEBUG:colcon.colcon_core.package_identification:Package '.' with type 'ros.ament_python' and name 'final-comp'
+[1.507s] Level 1:colcon.colcon_core.package_discovery:discover_packages(recursive) using defaults
+[1.507s] Level 1:colcon.colcon_core.package_discovery:discover_packages(ignore) discover
+[1.507s] Level 1:colcon.colcon_core.package_discovery:discover_packages(ignore) using defaults
+[1.507s] Level 1:colcon.colcon_core.package_discovery:discover_packages(path) discover
+[1.507s] Level 1:colcon.colcon_core.package_discovery:discover_packages(path) using defaults
+[1.659s] Level 1:colcon.colcon_core.package_discovery:discover_packages(prefix_path) check parameters
+[1.659s] Level 1:colcon.colcon_core.package_discovery:discover_packages(prefix_path) discover
+[1.689s] DEBUG:colcon.colcon_installed_package_information.package_discovery:Found 472 installed packages in /opt/ros/jazzy
+[1.719s] Level 1:colcon.colcon_core.package_discovery:discover_packages(prefix_path) using defaults
+[2.133s] Level 5:colcon.colcon_core.verb:set package 'final-comp' build argument 'cmake_args' from command line to 'None'
+[2.133s] Level 5:colcon.colcon_core.verb:set package 'final-comp' build argument 'cmake_target' from command line to 'None'
+[2.133s] Level 5:colcon.colcon_core.verb:set package 'final-comp' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[2.133s] Level 5:colcon.colcon_core.verb:set package 'final-comp' build argument 'cmake_clean_cache' from command line to 'False'
+[2.134s] Level 5:colcon.colcon_core.verb:set package 'final-comp' build argument 'cmake_clean_first' from command line to 'False'
+[2.134s] Level 5:colcon.colcon_core.verb:set package 'final-comp' build argument 'cmake_force_configure' from command line to 'False'
+[2.134s] Level 5:colcon.colcon_core.verb:set package 'final-comp' build argument 'ament_cmake_args' from command line to 'None'
+[2.134s] Level 5:colcon.colcon_core.verb:set package 'final-comp' build argument 'catkin_cmake_args' from command line to 'None'
+[2.134s] Level 5:colcon.colcon_core.verb:set package 'final-comp' build argument 'catkin_skip_building_tests' from command line to 'False'
+[2.134s] DEBUG:colcon.colcon_core.verb:Building package 'final-comp' with the following arguments: {'ament_cmake_args': None, 'build_base': '/home/kazaki/enae450-s26/final competition/enae450-final-competition/final-comp/build/final-comp', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': None, 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/home/kazaki/enae450-s26/final competition/enae450-final-competition/final-comp/install/final-comp', 'merge_install': False, 'path': '/home/kazaki/enae450-s26/final competition/enae450-final-competition/final-comp', 'symlink_install': False, 'test_result_base': None}
+[2.134s] INFO:colcon.colcon_core.executor:Executing jobs using 'parallel' executor
+[2.151s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:run_until_complete
+[2.151s] INFO:colcon.colcon_ros.task.ament_python.build:Building ROS package in '/home/kazaki/enae450-s26/final competition/enae450-final-competition/final-comp' with build type 'ament_python'
+[2.162s] Level 1:colcon.colcon_core.shell:create_environment_hook('final-comp', 'ament_prefix_path')
+[2.166s] INFO:colcon.colcon_core.plugin_system:Skipping extension 'colcon_core.shell.bat': Not used on non-Windows systems
+[2.166s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/kazaki/enae450-s26/final competition/enae450-final-competition/final-comp/install/final-comp/share/final-comp/hook/ament_prefix_path.ps1'
+[2.178s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/kazaki/enae450-s26/final competition/enae450-final-competition/final-comp/install/final-comp/share/final-comp/hook/ament_prefix_path.dsv'
+[2.179s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/kazaki/enae450-s26/final competition/enae450-final-competition/final-comp/install/final-comp/share/final-comp/hook/ament_prefix_path.sh'
+[2.181s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[2.181s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[3.278s] INFO:colcon.colcon_core.task.python.build:Building Python package in '/home/kazaki/enae450-s26/final competition/enae450-final-competition/final-comp'
+[3.279s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[3.280s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[5.838s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/kazaki/enae450-s26/final competition/enae450-final-competition/final-comp': PYTHONPATH=/home/kazaki/enae450-s26/final competition/enae450-final-competition/final-comp/build/final-comp/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/kazaki/enae450-s26/final competition/enae450-final-competition/final-comp/install/final-comp/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base build/final-comp build --build-base /home/kazaki/enae450-s26/final competition/enae450-final-competition/final-comp/build/final-comp/build install --record /home/kazaki/enae450-s26/final competition/enae450-final-competition/final-comp/build/final-comp/install.log --single-version-externally-managed install_data
+[8.422s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/kazaki/enae450-s26/final competition/enae450-final-competition/final-comp' returned '0': PYTHONPATH=/home/kazaki/enae450-s26/final competition/enae450-final-competition/final-comp/build/final-comp/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/kazaki/enae450-s26/final competition/enae450-final-competition/final-comp/install/final-comp/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base build/final-comp build --build-base /home/kazaki/enae450-s26/final competition/enae450-final-competition/final-comp/build/final-comp/build install --record /home/kazaki/enae450-s26/final competition/enae450-final-competition/final-comp/build/final-comp/install.log --single-version-externally-managed install_data
+[8.438s] Level 1:colcon.colcon_core.environment:checking '/home/kazaki/enae450-s26/final competition/enae450-final-competition/final-comp/install/final-comp' for CMake module files
+[8.439s] Level 1:colcon.colcon_core.environment:checking '/home/kazaki/enae450-s26/final competition/enae450-final-competition/final-comp/install/final-comp' for CMake config files
+[8.441s] Level 1:colcon.colcon_core.environment:checking '/home/kazaki/enae450-s26/final competition/enae450-final-competition/final-comp/install/final-comp/lib'
+[8.441s] Level 1:colcon.colcon_core.environment:checking '/home/kazaki/enae450-s26/final competition/enae450-final-competition/final-comp/install/final-comp/bin'
+[8.442s] Level 1:colcon.colcon_core.environment:checking '/home/kazaki/enae450-s26/final competition/enae450-final-competition/final-comp/install/final-comp/lib/pkgconfig/final-comp.pc'
+[8.442s] Level 1:colcon.colcon_core.environment:checking '/home/kazaki/enae450-s26/final competition/enae450-final-competition/final-comp/install/final-comp/lib/python3.12/site-packages'
+[8.442s] Level 1:colcon.colcon_core.shell:create_environment_hook('final-comp', 'pythonpath')
+[8.443s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/kazaki/enae450-s26/final competition/enae450-final-competition/final-comp/install/final-comp/share/final-comp/hook/pythonpath.ps1'
+[8.445s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/kazaki/enae450-s26/final competition/enae450-final-competition/final-comp/install/final-comp/share/final-comp/hook/pythonpath.dsv'
+[8.446s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/kazaki/enae450-s26/final competition/enae450-final-competition/final-comp/install/final-comp/share/final-comp/hook/pythonpath.sh'
+[8.451s] Level 1:colcon.colcon_core.environment:checking '/home/kazaki/enae450-s26/final competition/enae450-final-competition/final-comp/install/final-comp/bin'
+[8.452s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(final-comp)
+[8.452s] INFO:colcon.colcon_core.shell:Creating package script '/home/kazaki/enae450-s26/final competition/enae450-final-competition/final-comp/install/final-comp/share/final-comp/package.ps1'
+[8.455s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/kazaki/enae450-s26/final competition/enae450-final-competition/final-comp/install/final-comp/share/final-comp/package.dsv'
+[8.456s] INFO:colcon.colcon_core.shell:Creating package script '/home/kazaki/enae450-s26/final competition/enae450-final-competition/final-comp/install/final-comp/share/final-comp/package.sh'
+[8.457s] INFO:colcon.colcon_core.shell:Creating package script '/home/kazaki/enae450-s26/final competition/enae450-final-competition/final-comp/install/final-comp/share/final-comp/package.bash'
+[8.459s] INFO:colcon.colcon_core.shell:Creating package script '/home/kazaki/enae450-s26/final competition/enae450-final-competition/final-comp/install/final-comp/share/final-comp/package.zsh'
+[8.460s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/kazaki/enae450-s26/final competition/enae450-final-competition/final-comp/install/final-comp/share/colcon-core/packages/final-comp)
+[8.463s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:closing loop
+[8.463s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:loop closed
+[8.463s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:run_until_complete finished with '0'
+[8.463s] DEBUG:colcon.colcon_core.event_reactor:joining thread
+[8.711s] INFO:colcon.colcon_core.plugin_system:Skipping extension 'colcon_notification.desktop_notification.notify_send': Could not find 'notify-send'
+[8.712s] INFO:colcon.colcon_core.plugin_system:Skipping extension 'colcon_notification.desktop_notification.terminal_notifier': Not used on non-Darwin systems
+[8.712s] INFO:colcon.colcon_core.plugin_system:Skipping extension 'colcon_notification.desktop_notification.win32': Not used on non-Windows systems
+[8.712s] INFO:colcon.colcon_notification.desktop_notification:Sending desktop notification using 'notify2'
+[8.715s] DEBUG:colcon.colcon_notification.desktop_notification.notify2:Failed to initialize notify2: org.freedesktop.DBus.Error.ServiceUnknown: The name org.freedesktop.Notifications was not provided by any .service files
+[8.715s] DEBUG:colcon.colcon_core.event_reactor:joined thread
+[8.715s] INFO:colcon.colcon_core.shell:Creating prefix script '/home/kazaki/enae450-s26/final competition/enae450-final-competition/final-comp/install/local_setup.ps1'
+[8.717s] INFO:colcon.colcon_core.shell:Creating prefix util module '/home/kazaki/enae450-s26/final competition/enae450-final-competition/final-comp/install/_local_setup_util_ps1.py'
+[8.720s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/home/kazaki/enae450-s26/final competition/enae450-final-competition/final-comp/install/setup.ps1'
+[8.728s] INFO:colcon.colcon_core.shell:Creating prefix script '/home/kazaki/enae450-s26/final competition/enae450-final-competition/final-comp/install/local_setup.sh'
+[8.732s] INFO:colcon.colcon_core.shell:Creating prefix util module '/home/kazaki/enae450-s26/final competition/enae450-final-competition/final-comp/install/_local_setup_util_sh.py'
+[8.734s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/home/kazaki/enae450-s26/final competition/enae450-final-competition/final-comp/install/setup.sh'
+[8.737s] INFO:colcon.colcon_core.shell:Creating prefix script '/home/kazaki/enae450-s26/final competition/enae450-final-competition/final-comp/install/local_setup.bash'
+[8.738s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/home/kazaki/enae450-s26/final competition/enae450-final-competition/final-comp/install/setup.bash'
+[8.740s] INFO:colcon.colcon_core.shell:Creating prefix script '/home/kazaki/enae450-s26/final competition/enae450-final-competition/final-comp/install/local_setup.zsh'
+[8.741s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/home/kazaki/enae450-s26/final competition/enae450-final-competition/final-comp/install/setup.zsh'

@@ -156,17 +156,25 @@ class RightHandWallFollower(Node):
             cmd.header.frame_id = "base_footprint"
             self.cmd_pub.publish(cmd)
             time.sleep(0.5)
+            print("moved forward a bit")
             cmd.twist.linear.x = 0.0
             cmd.twist.angular.z = self.turn_speed
             cmd.header.stamp = self.get_clock().now().to_msg()
             cmd.header.frame_id = "base_footprint"
             self.cmd_pub.publish(cmd)
-            time.sleep(self.turn_speed * math.pi)
+            print("spinning")
+            #send spin command for self.turn_speed * math.py constantly
+            t0 = self.get_clock().now().to_msg()
+            while (self.get_clock().now().to_msg().sec - t0.sec) < (math.pi / self.turn_speed):
+                self.cmd_pub.publish(cmd)
+                time.sleep(0.1)
+            # time.sleep(self.turn_speed * math.pi * 10)
             cmd.twist.angular.z = 0.0
             cmd.header.stamp = self.get_clock().now().to_msg()
             cmd.header.frame_id = "base_footprint"
             cmd.twist.linear.x = 0.0
             self.cmd_pub.publish(cmd)
+            print("180 done, stopping")
             quit()
        
         elif front_clear and right_wall:

@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
 
+import math
 import sys
 import termios
+import time
 import tty
 import select
 
@@ -129,6 +131,14 @@ def main():
     except KeyboardInterrupt:
         node.get_logger().info("Ctrl+C detected. Stopping teleop.")
     finally:
+        #do 180 at the end and stop
+        node.get_logger().info("Doing 180-degree turn.")
+        turn = TwistStamped()
+        turn.header.stamp = node.get_clock().now().to_msg()
+        turn.twist.linear.x = 0.0
+        turn.twist.angular.z = 1.0 
+        node.pub.publish(turn)
+        time.sleep(math.pi) 
         # Send stop command on exit
         stop = TwistStamped()
         stop.header.stamp = node.get_clock().now().to_msg()

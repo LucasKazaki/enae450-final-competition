@@ -475,8 +475,8 @@ class CmdVelBagTool(Node):
 
         self.get_logger().info("Starting lidar-based centering routine.")
 
-        max_single_correction_m = 0.35
-        min_correction_m = 0.05
+        max_single_correction_m = 0.5
+        min_correction_m = 0.01
         side_wall_window_deg = 30.0
         front_back_window_deg = 30.0
         max_wall_for_centering_m = 1.0

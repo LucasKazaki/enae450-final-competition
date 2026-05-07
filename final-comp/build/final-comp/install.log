@@ -8,9 +8,11 @@
 /home/kazaki/enae450-s26/final competition/enae450-final-competition/final-comp/install/final-comp/lib/python3.12/site-packages/src/slam_map_viewer.py
 /home/kazaki/enae450-s26/final competition/enae450-final-competition/final-comp/install/final-comp/lib/python3.12/site-packages/src/teleop.py
 /home/kazaki/enae450-s26/final competition/enae450-final-competition/final-comp/install/final-comp/lib/python3.12/site-packages/src/bag_cmd_vel_player.py
+/home/kazaki/enae450-s26/final competition/enae450-final-competition/final-comp/install/final-comp/lib/python3.12/site-packages/src/metric_c_bag_recorder.py
 /home/kazaki/enae450-s26/final competition/enae450-final-competition/final-comp/install/final-comp/lib/python3.12/site-packages/src/draw_to_tb4_gazebo_world_compressed.py
 /home/kazaki/enae450-s26/final competition/enae450-final-competition/final-comp/install/final-comp/lib/python3.12/site-packages/src/move_robot.py
 /home/kazaki/enae450-s26/final competition/enae450-final-competition/final-comp/install/final-comp/lib/python3.12/site-packages/src/__init__.py
+/home/kazaki/enae450-s26/final competition/enae450-final-competition/final-comp/install/final-comp/lib/python3.12/site-packages/src/metric_c_plotter.py
 /home/kazaki/enae450-s26/final competition/enae450-final-competition/final-comp/install/final-comp/lib/python3.12/site-packages/src/premapped_recorder.py
 /home/kazaki/enae450-s26/final competition/enae450-final-competition/final-comp/install/final-comp/lib/python3.12/site-packages/src/__pycache__/right_hand_solver.cpython-312.pyc
 /home/kazaki/enae450-s26/final competition/enae450-final-competition/final-comp/install/final-comp/lib/python3.12/site-packages/src/__pycache__/view_map.cpython-312.pyc
@@ -22,9 +24,11 @@
 /home/kazaki/enae450-s26/final competition/enae450-final-competition/final-comp/install/final-comp/lib/python3.12/site-packages/src/__pycache__/slam_map_viewer.cpython-312.pyc
 /home/kazaki/enae450-s26/final competition/enae450-final-competition/final-comp/install/final-comp/lib/python3.12/site-packages/src/__pycache__/teleop.cpython-312.pyc
 /home/kazaki/enae450-s26/final competition/enae450-final-competition/final-comp/install/final-comp/lib/python3.12/site-packages/src/__pycache__/bag_cmd_vel_player.cpython-312.pyc
+/home/kazaki/enae450-s26/final competition/enae450-final-competition/final-comp/install/final-comp/lib/python3.12/site-packages/src/__pycache__/metric_c_bag_recorder.cpython-312.pyc
 /home/kazaki/enae450-s26/final competition/enae450-final-competition/final-comp/install/final-comp/lib/python3.12/site-packages/src/__pycache__/draw_to_tb4_gazebo_world_compressed.cpython-312.pyc
 /home/kazaki/enae450-s26/final competition/enae450-final-competition/final-comp/install/final-comp/lib/python3.12/site-packages/src/__pycache__/move_robot.cpython-312.pyc
 /home/kazaki/enae450-s26/final competition/enae450-final-competition/final-comp/install/final-comp/lib/python3.12/site-packages/src/__pycache__/__init__.cpython-312.pyc
+/home/kazaki/enae450-s26/final competition/enae450-final-competition/final-comp/install/final-comp/lib/python3.12/site-packages/src/__pycache__/metric_c_plotter.cpython-312.pyc
 /home/kazaki/enae450-s26/final competition/enae450-final-competition/final-comp/install/final-comp/lib/python3.12/site-packages/src/__pycache__/premapped_recorder.cpython-312.pyc
 /home/kazaki/enae450-s26/final competition/enae450-final-competition/final-comp/install/final-comp/share/ament_index/resource_index/packages/final-comp
 /home/kazaki/enae450-s26/final competition/enae450-final-competition/final-comp/install/final-comp/share/final-comp/package.xml
@@ -38,6 +42,8 @@
 /home/kazaki/enae450-s26/final competition/enae450-final-competition/final-comp/install/final-comp/lib/python3.12/site-packages/final_comp-0.0.0-py3.12.egg-info/zip-safe
 /home/kazaki/enae450-s26/final competition/enae450-final-competition/final-comp/install/final-comp/lib/final-comp/bag_cmd_vel_player
 /home/kazaki/enae450-s26/final competition/enae450-final-competition/final-comp/install/final-comp/lib/final-comp/maze_solver
+/home/kazaki/enae450-s26/final competition/enae450-final-competition/final-comp/install/final-comp/lib/final-comp/metric_c_bag_recorder
+/home/kazaki/enae450-s26/final competition/enae450-final-competition/final-comp/install/final-comp/lib/final-comp/metric_c_plotter
 /home/kazaki/enae450-s26/final competition/enae450-final-competition/final-comp/install/final-comp/lib/final-comp/move_robot
 /home/kazaki/enae450-s26/final competition/enae450-final-competition/final-comp/install/final-comp/lib/final-comp/right_hand_solver
 /home/kazaki/enae450-s26/final competition/enae450-final-competition/final-comp/install/final-comp/lib/final-comp/slam_auto_viewer
