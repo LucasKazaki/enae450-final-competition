@@ -12,6 +12,8 @@ launch/slam_launch.py
 resource/final-comp
 src/__init__.py
 src/bag_cmd_vel_player.py
+src/bag_crop_scale_plotter.py
+src/crop_bag.py
 src/draw_to_tb4_gazebo_world.py
 src/draw_to_tb4_gazebo_world_compressed.py
 src/maze_solver.py

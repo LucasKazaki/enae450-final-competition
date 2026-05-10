@@ -38,6 +38,8 @@ setup(
             'teleop = src.teleop:main',
             "metric_c_bag_recorder = src.metric_c_bag_recorder:main",
             "metric_c_plotter = src.metric_c_plotter:main",
+            "crop_bag = src.crop_bag:main",
+            "bag_crop_scale_plotter = src.bag_crop_scale_plotter:main",
         ],
     },
 )

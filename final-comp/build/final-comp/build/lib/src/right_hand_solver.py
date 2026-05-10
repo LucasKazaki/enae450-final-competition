@@ -144,8 +144,8 @@ class RightHandWallFollower(Node):
         """
        
         #check if out of maze first
-        if self.get_range_at_angle(scan, 0, 80) > self.open_space_dist:
-            print(self.get_range_at_angle(scan, 0, 80))
+        if self.get_range_at_angle(scan, 0, 70) > self.open_space_dist:
+            print(self.get_range_at_angle(scan, 0, 70))
             print("\n|||***open space on all sides, likely out of maze***|||")
             print("- doing 180 and stopping")
             # do a 180 and stop
