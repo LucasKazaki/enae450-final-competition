@@ -1,111 +1,71 @@
-# enae450-final-competition
+# TurtleBot 4 Autonomous Maze Navigation
 
-enae450 final competition using ros2 and turtlebot4 to solve a maze
+A ROS 2 robotics project for mapping, teleoperation, repeatable command playback, autonomous maze exploration, and trajectory analysis on a Clearpath TurtleBot 4.
 
-SLAM_TOOLBOX tutorial: https://roboticsbackend.com/ros2-nav2-generate-a-map-with-slam_toolbox/
+I built this for the University of Maryland's ENAE450 final competition. The repository is now curated around the source code and representative analysis outputs; generated ROS workspaces, raw bag recordings, and course-distributed materials have been removed.
 
-# QUICK START
+## System overview
 
-## Teleop Run:
-Terminal 1:
+```mermaid
+flowchart LR
+    L[LaserScan] --> S[Wall / junction reasoning]
+    O[Odometry] --> S
+    M[SLAM occupancy map] --> S
+    S --> C[TwistStamped commands]
+    C --> T[TurtleBot 4]
+    T --> B[ROS 2 bag recorder]
+    B --> A[Trajectory and occupancy analysis]
 ```
-  cd ~/final-comp
 
-  colcon build
+The package contains several approaches and supporting tools:
 
-  source install/setup.bash
+- `maze_solver.py` — junction-aware depth-first exploration using map, odometry, and lidar inputs
+- `right_hand_solver.py` — reactive right-wall-following baseline
+- `bag_cmd_vel_player.py` — lidar-assisted start alignment plus command recording/replay
+- `teleop.py` — namespaced keyboard control for `TwistStamped`
+- `metric_c_bag_recorder.py` and `metric_c_plotter.py` — repeatable run capture, trajectory export, and occupancy-grid reconstruction
+- `draw_to_tb4_gazebo_world*.py` — converts a sketched grid into an SDF maze world
 
-  ros2 run final-comp bag_cmd_vel_player record --bag my_teleop_run --namespace /tb4_6 --center --lidar-offset-deg -90
+Representative trajectory CSVs and plots are retained under `final-comp/metric_c_outputs/old/` as provenance for the analysis workflow. They are historical run artifacts, not benchmark claims.
 
-```
-Terminal 2:
-```
-  cd ~/final-comp
+## Environment
 
-  colcon build
+The project targets ROS 2 Jazzy on Ubuntu 24.04 with TurtleBot 4 and Gazebo packages installed. From a ROS workspace:
 
-  source install/setup.bash
+```bash
+mkdir -p ~/tb4_ws/src
+cd ~/tb4_ws/src
+git clone https://github.com/LucasKazaki/enae450-final-competition.git
+cd ..
+rosdep install --from-paths src --ignore-src -r -y
+colcon build --symlink-install
+source install/setup.bash
+```
 
-  ros2 run final-comp teleop --ros-args -p cmd_topic:=/tb4_6/cmd_vel
-```
-In terminal 2, use the wasd keys to move and the space key to stop.
-Solve the maze using terminal 2 and while terminal 1 is recording.
-Once the maze is solved, ctrl+c both terminals.
-Terminal 1:
-```
-  ros2 run final-comp bag_cmd_vel_player follow --bag my_teleop_run --namespace /tb4_6 --center --lidar-offset-deg -90
-```
-Teleop run should be done
+Run the reactive baseline against a namespaced robot:
 
-## Blind Run
+```bash
+ros2 run final-comp right_hand_solver --ros-args \
+  -p scan_topic:=/tb4_6/scan \
+  -p cmd_topic:=/tb4_6/cmd_vel
 ```
-  cd ~/final-comp
 
-  colcon build
+Record and replay a teleoperated run:
 
-  source install/setup.bash
+```bash
+ros2 run final-comp bag_cmd_vel_player record \
+  --bag my_teleop_run --namespace /tb4_6 --center
 
-  ros2 run final-comp right_hand_solver --ros-args -p scan_topic:=/tb4_6/scan -p cmd_topic:=/tb4_6/cmd_vel
+ros2 run final-comp bag_cmd_vel_player follow \
+  --bag my_teleop_run --namespace /tb4_6 --center
 ```
-## Build the package
 
-From the package folder:
-```
-  cd ~/final-comp
-  
-  colcon build --symlink-install
-  ```
-Source the package
-```
-  source install/setup.bash
-```
-Check that the package built correctly
-```
-  ros2 pkg list | grep final_comp
-```
-If nothing appears, rebuild and source again:
-```
-  cd ~/final-comp
-  
-  colcon build --symlink-install
-  
-  source install/setup.bash
-```
-## Run the Python nodes
+## Verification
 
-Use these commands after sourcing:
-```
-  ros2 run final-comp maze_solver --ros-args -r __ns:=/tbX
-  
-  ros2 run final-comp move_robot --ros-args -r __ns:=/tbX
-  
-  ros2 run final-comp slam_map_viewer --ros-args -r __ns:=/tbX
-  
-  ros2 run final-comp view_map --ros-args -r __ns:=/tbX
-  
-  ros2 run final-comp bag_cmd_vel_player record --bag my_teleop_run --cmd-topic /tb4_6/cmd_vel
+GitHub Actions compiles every Python source file on Python 3.12 to catch syntax regressions. Hardware and simulation validation require a configured ROS 2/TurtleBot environment and are therefore documented as manual integration checks.
 
-  ros2 run final-comp teleop --ros-args -p cmd_topic:=/tb4_6/cmd_vel
-```
-# Common commands
+## Safety and scope
 
-## Rebuild after editing files:
-```
-  cd ~/final-comp
-  
-  colcon build --symlink-install
-  
-  source install/setup.bash
-```
-## Run a file directly for debugging:
-```
-  python3 src/maze_solver.py
-```
-## Check executable names:
-```
-  ros2 pkg executables final_comp
-```
-## Run gazebo simulator:
-```
-  ros2 launch turtlebot4_gz_bringup turtlebot4_gz.launch.py
-```
+This is student research software. Test in simulation before operating a physical robot, keep the platform within reach of an emergency stop, and review topic names and speed parameters for your robot. The code is not a certified navigation or safety system.
+
+Copyright © Lucas Tao. No license is granted for reuse or redistribution.

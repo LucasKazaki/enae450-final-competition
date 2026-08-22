@@ -1,0 +1,13 @@
+build/
+install/
+log/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+*.db3
+*.mcap
+*.bag
+metadata.yaml
+.idea/
+.vscode/

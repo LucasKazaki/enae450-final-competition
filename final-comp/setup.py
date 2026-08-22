@@ -6,7 +6,7 @@ package_name = 'final-comp'
 
 setup(
     name=package_name,
-    version='0.0.0',
+    version='0.1.0',
     packages=find_packages(exclude=['test']),
     data_files=[
         ('share/ament_index/resource_index/packages',
@@ -16,10 +16,10 @@ setup(
     ],
     install_requires=['setuptools'],
     zip_safe=True,
-    maintainer='kazaki',
-    maintainer_email='kazaki@umd.edu',
-    description='TODO: Package description',
-    license='TODO: License declaration',
+    maintainer='Lucas Tao',
+    maintainer_email='LucasKazaki@users.noreply.github.com',
+    description='ROS 2 tools for TurtleBot 4 maze navigation and run analysis',
+    license='Proprietary',
     extras_require={
         'test': [
             'pytest',
